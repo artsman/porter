@@ -11,7 +11,7 @@
     "rollup"
   ],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "porter-rollup -L -F {\\\"rollup\\\":{\\\"a\\\":true}}",

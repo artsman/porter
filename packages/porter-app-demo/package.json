@@ -11,7 +11,7 @@
     "webpack"
   ],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "porter-webpack -L -F {\\\"webpack\\\":{\\\"a\\\":true}}",

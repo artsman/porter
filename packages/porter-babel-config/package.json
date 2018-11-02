@@ -14,7 +14,10 @@
     "src"
   ],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "src/babel-config.js",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "7.1.0",

@@ -16,7 +16,10 @@
     "src"
   ],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "porter-webpack-express-dev": "src/bin/webpack-express-dev.js"
   },

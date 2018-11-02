@@ -13,7 +13,10 @@
   ],
   "files": [],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "node-sass": "^4.9.4",
     "sass-loader": "^7.1.0"

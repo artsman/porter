@@ -14,7 +14,10 @@
     "src"
   ],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "src/index.js",
   "dependencies": {
     "@porter/logger": "^1.0.0"

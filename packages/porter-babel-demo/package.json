@@ -11,7 +11,7 @@
     "babel"
   ],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "porter-babel -L -F {\\\"babel\\\":{\\\"a\\\":true}}",

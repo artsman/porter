@@ -14,7 +14,10 @@
     "src"
   ],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "porter-rollup": "src/bin/rollup.js",
     "porter-rollup-clean": "src/bin/clean.js"

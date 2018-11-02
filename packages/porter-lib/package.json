@@ -12,7 +12,10 @@
   ],
   "files": [],
   "author": "jharris",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@porter/babel": "^1.0.0",
     "@porter/rollup": "^1.0.0",
