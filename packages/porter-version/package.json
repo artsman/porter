@@ -1,0 +1,26 @@
+{
+  "name": "@porter/version",
+  "version": "1.0.0",
+  "description": "porter version package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "version"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "bin": {
+    "porter-version-update": "src/bin/version-update.js"
+  },
+  "dependencies": {
+    "@porter/config": "^1.0.0",
+    "@porter/logger": "^1.0.0",
+    "replace-in-file": "^3.4.2"
+  }
+}

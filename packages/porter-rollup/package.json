@@ -1,0 +1,37 @@
+{
+  "name": "@porter/rollup",
+  "version": "1.0.0",
+  "description": "porter rollup package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "rollup"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "bin": {
+    "porter-rollup": "src/bin/rollup.js",
+    "porter-rollup-clean": "src/bin/clean.js"
+  },
+  "dependencies": {
+    "@porter/babel-config": "^1.0.0",
+    "@porter/config": "^1.0.0",
+    "@porter/logger": "^1.0.0",
+    "pretty-ms": "^4.0.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.66.6",
+    "rollup-plugin-analyzer": "^2.1.0",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-license": "^0.7.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-replace": "^2.1.0",
+    "rollup-plugin-uglify": "^6.0.0"
+  }
+}

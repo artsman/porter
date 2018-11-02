@@ -1,0 +1,21 @@
+{
+  "name": "@porter/webpack-sass-addon",
+  "version": "1.0.0",
+  "description": "porter webpack sass addon package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "webpack",
+    "sass"
+  ],
+  "files": [],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "node-sass": "^4.9.4",
+    "sass-loader": "^7.1.0"
+  }
+}

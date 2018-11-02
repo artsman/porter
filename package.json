@@ -1,0 +1,21 @@
+{
+	"private": true,
+	"devDependencies": {
+		"lerna": "^3.4.3",
+		"rimraf": "^2.6.2"
+	},
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"clean": "rimraf packages/*/node_modules rimraf node_modules",
+		"lerna": "lerna",
+		"build": "lerna run build",
+		"bundle": "lerna run bundle",
+		"deploy": "lerna run deploy",
+		"dev": "lerna exec --scope @artsman/react-nav-demo npm run dev",
+		"deploy-run": "lerna exec --scope @artsman/react-nav-demo npm run deploy-run",
+		"prod": "lerna exec --scope @artsman/react-nav-demo npm run prod",
+		"prepublishOnly": "lerna run prepublishOnly"
+	}
+}

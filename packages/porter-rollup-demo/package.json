@@ -1,0 +1,23 @@
+{
+  "name": "@porter/rollup-demo",
+  "version": "1.0.0",
+  "description": "porter rollup demo package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "rollup"
+  ],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "build": "porter-rollup -L -F {\\\"rollup\\\":{\\\"a\\\":true}}",
+    "clean": "porter-rollup-clean"
+  },
+  "dependencies": {
+    "@porter/rollup": "^1.0.0"
+  }
+}

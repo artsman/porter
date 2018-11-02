@@ -1,0 +1,29 @@
+{
+  "name": "@porter/babel-config",
+  "version": "1.0.0",
+  "description": "porter babel config package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "babel"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "main": "src/babel-config.js",
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-react-jsx": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-plugin-transform-for-of-as-array": "^1.1.1",
+    "babel-plugin-transform-imports": "^1.5.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.19"
+  }
+}

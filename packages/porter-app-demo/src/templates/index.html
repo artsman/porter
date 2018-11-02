@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Reveal</title>
+    <!-- CSS Tags -->
+    <% for (var cssIndex = 0; cssIndex < htmlWebpackPlugin.files.css.length; cssIndex++) { %>
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[cssIndex] %>">
+    <% } %>
+</head>
+<body>
+    <noscript>This page requires Javascript to be enabled.</noscript>
+    <script>
+      // HACK: Inject initial state into React when serving from Flask by using Jinja2 templating
+      window.__config = {{ config }}
+    </script>
+    <!-- Application Root -->
+    <div id="root">
+        <!-- Loading -->
+        <div id="loading" class="container d-none">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2>Loading...</h2>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type='text/javascript'>
+            setTimeout(function() {
+                var loadingElement = document.getElementById('loading');
+                if (loadingElement !== undefined && loadingElement !== null) {
+                    loadingElement.className = "container";
+                }
+            }, 750);
+        </script>
+    </div>
+    <!-- Script Tags -->
+    <% for (var jsIndex = 0; jsIndex < htmlWebpackPlugin.files.js.length; jsIndex++) { %>
+    <script src="<%= htmlWebpackPlugin.files.js[jsIndex] %>"></script>
+    <% } %>
+    <script>
+//        if('serviceWorker' in navigator) {
+//            navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(function(registration) {
+//                console.log("Service Worker Registered");
+//            });
+//
+//            navigator.serviceWorker.ready.then(function(registration) {
+//                console.log("Service Worker Ready");
+//            });
+//        }
+    </script>
+</body>
+</html>

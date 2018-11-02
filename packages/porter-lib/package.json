@@ -1,0 +1,21 @@
+{
+  "name": "@porter/lib",
+  "version": "1.0.0",
+  "description": "porter lib package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "lib"
+  ],
+  "files": [],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@porter/babel": "^1.0.0",
+    "@porter/rollup": "^1.0.0",
+    "@porter/version": "^1.0.0"
+  }
+}

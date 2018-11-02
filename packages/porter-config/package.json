@@ -1,0 +1,22 @@
+{
+  "name": "@porter/config",
+  "version": "1.0.0",
+  "description": "porter config package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "config"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "main": "src/index.js",
+  "dependencies": {
+    "@porter/logger": "^1.0.0"
+  }
+}

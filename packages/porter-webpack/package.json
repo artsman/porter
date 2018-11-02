@@ -1,0 +1,51 @@
+{
+  "name": "@porter/webpack",
+  "version": "1.0.0",
+  "description": "porter webpack package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "webpack"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "UNLICENSED",
+  "main": "src/index.js",
+  "bin": {
+    "porter-webpack": "src/bin/webpack.js",
+    "porter-webpack-clean": "src/bin/clean.js"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "@porter/babel-config": "^1.0.0",
+    "@porter/config": "^1.0.0",
+    "@porter/logger": "^1.0.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "exports-loader": "^0.7.0",
+    "expose-loader": "^0.7.5",
+    "file-loader": "^2.0.0",
+    "html-webpack-deploy-assets-plugin": "^1.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "imports-loader": "^0.8.0",
+    "json-loader": "^0.5.7",
+    "mini-css-extract-plugin": "^0.4.4",
+    "node-noop": "^1.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.2",
+    "split-chunk-loader": "^1.0.1",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.23.1",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-sentry-plugin": "^1.16.0",
+    "whatwg-fetch": "^3.0.0"
+  }
+}

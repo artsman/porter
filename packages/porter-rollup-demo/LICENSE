@@ -1,0 +1,8 @@
+Porter Rollup Demo v<%= pkg.version %>
+Generated: <%= moment().format('YYYY-MM-DD') %>
+
+Copyright (c) 2015-present, ACME Inc.
+
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
