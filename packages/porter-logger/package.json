@@ -18,7 +18,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "src/index.js",
-  "dependencies": {
-  }
+  "main": "src/index.js"
 }
