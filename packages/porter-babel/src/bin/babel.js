@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const loadPorterConfig = require("@porter/config");
-const porterLogger = require("@porter/logger");
+const loadPorterConfig = require("@porterjs/config");
+const porterLogger = require("@porterjs/logger");
 
 const createBabelConfig = require("../babel-config");
 const babelExec = require("../babel-exec");

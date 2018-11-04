@@ -18,6 +18,6 @@
     "clean": "porter-babel-clean"
   },
   "dependencies": {
-    "@porter/babel": "^1.0.0"
+    "@porterjs/babel": "^1.0.0"
   }
 }

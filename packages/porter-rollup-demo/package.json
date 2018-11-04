@@ -18,6 +18,6 @@
     "clean": "porter-rollup-clean"
   },
   "dependencies": {
-    "@porter/rollup": "^1.0.0"
+    "@porterjs/rollup": "^1.0.0"
   }
 }

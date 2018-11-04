@@ -17,8 +17,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@porter/babel": "^1.0.0",
-    "@porter/rollup": "^1.0.0",
-    "@porter/version": "^1.0.0"
+    "@porterjs/babel": "^1.0.0",
+    "@porterjs/rollup": "^1.0.0",
+    "@porterjs/version": "^1.0.0"
   }
 }

@@ -20,6 +20,6 @@
   },
   "main": "src/index.js",
   "dependencies": {
-    "@porter/logger": "^1.0.0"
+    "@porterjs/logger": "^1.0.0"
   }
 }

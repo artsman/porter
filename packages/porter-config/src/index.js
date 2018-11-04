@@ -1,6 +1,6 @@
 const path = require("path");
 
-const porterLogger = require("@porter/logger");
+const porterLogger = require("@porterjs/logger");
 
 const applyLocalAndForcedPorterConfig = require('./local-config');
 const configToString = require('./config-to-string');

@@ -4,8 +4,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const nunjucks = require('nunjucks');
 const expressNunjucks = require('express-nunjucks');
-const { startExpressServer } = require('@porter/express');
-const { createWebpackConfig } = require('@porter/webpack');
+const { startExpressServer } = require('@porterjs/express');
+const { createWebpackConfig } = require('@porterjs/webpack');
 
 module.exports = function startWebpackExpressDevServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: true });

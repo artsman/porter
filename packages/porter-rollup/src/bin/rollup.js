@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const loadPorterConfig = require("@porter/config");
-const porterLogger = require('@porter/logger');
+const loadPorterConfig = require("@porterjs/config");
+const porterLogger = require('@porterjs/logger');
 
 const rollupExec = require("../rollup-exec");
 const createRollupConfig = require("../rollup-config");

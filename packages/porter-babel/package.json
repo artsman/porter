@@ -25,9 +25,9 @@
   "dependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-transform-runtime": "^7.1.0",
-    "@porter/babel-config": "^1.0.0",
-    "@porter/config": "^1.0.0",
-    "@porter/logger": "^1.0.0",
+    "@porterjs/babel-config": "^1.0.0",
+    "@porterjs/config": "^1.0.0",
+    "@porterjs/logger": "^1.0.0",
     "fs-readdir-recursive": "^1.1.0",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",

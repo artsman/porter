@@ -9,7 +9,7 @@ const HtmlWebpackDeployAssetsPlugin = require('html-webpack-deploy-assets-plugin
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryPlugin = require('webpack-sentry-plugin');
 
-const createBabelConfig = require("@porter/babel-config");
+const createBabelConfig = require("@porterjs/babel-config");
 
 function isPackageInstalled(package) {
   let resolved = null;

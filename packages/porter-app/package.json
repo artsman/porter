@@ -17,8 +17,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@porter/webpack": "^1.0.0",
-    "@porter/webpack-express": "^1.0.0",
-    "@porter/webpack-express-dev": "^1.0.0"
+    "@porterjs/webpack": "^1.0.0",
+    "@porterjs/webpack-express": "^1.0.0",
+    "@porterjs/webpack-express-dev": "^1.0.0"
   }
 }

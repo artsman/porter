@@ -9,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 
 const CALLER = {
-  name: "@porter/babel",
+  name: "@porterjs/babel",
 };
 
 module.exports = function babelExec({ inputPath, outputPath, babelConfig, logger = console, extensions, sourceMaps, description = null }) {

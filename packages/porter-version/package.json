@@ -22,8 +22,8 @@
     "porter-version-update": "src/bin/version-update.js"
   },
   "dependencies": {
-    "@porter/config": "^1.0.0",
-    "@porter/logger": "^1.0.0",
+    "@porterjs/config": "^1.0.0",
+    "@porterjs/logger": "^1.0.0",
     "replace-in-file": "^3.4.2"
   }
 }

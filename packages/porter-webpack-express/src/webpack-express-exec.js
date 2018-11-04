@@ -1,8 +1,8 @@
 const path = require('path');
 const express = require('express');
 const expressNunjucks = require('express-nunjucks');
-const { startExpressServer } = require('@porter/express');
-const { createWebpackConfig, webpackExec } = require('@porter/webpack');
+const { startExpressServer } = require('@porterjs/express');
+const { createWebpackConfig, webpackExec } = require('@porterjs/webpack');
 
 module.exports = function startWebpackExpressServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: false });
