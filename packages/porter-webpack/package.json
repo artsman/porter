@@ -1,5 +1,5 @@
 {
-  "name": "@porter/webpack",
+  "name": "@porterjs/webpack",
   "version": "1.0.0",
   "description": "porter webpack package",
   "repository": {

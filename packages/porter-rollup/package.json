@@ -1,5 +1,5 @@
 {
-  "name": "@porter/rollup",
+  "name": "@porterjs/rollup",
   "version": "1.0.0",
   "description": "porter rollup package",
   "repository": {

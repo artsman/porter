@@ -1,5 +1,5 @@
 {
-  "name": "@porter/express",
+  "name": "@porterjs/express",
   "version": "1.0.0",
   "description": "porter express package",
   "repository": {

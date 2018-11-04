@@ -1,5 +1,5 @@
 {
-  "name": "@porter/webpack-sass-addon",
+  "name": "@porterjs/webpack-sass-addon",
   "version": "1.0.0",
   "description": "porter webpack sass addon package",
   "repository": {

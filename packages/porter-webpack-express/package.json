@@ -1,5 +1,5 @@
 {
-  "name": "@porter/webpack-express",
+  "name": "@porterjs/webpack-express",
   "version": "1.0.0",
   "description": "porter webpack express package",
   "repository": {

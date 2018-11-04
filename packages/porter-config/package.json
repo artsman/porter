@@ -1,5 +1,5 @@
 {
-  "name": "@porter/config",
+  "name": "@porterjs/config",
   "version": "1.0.0",
   "description": "porter config package",
   "repository": {

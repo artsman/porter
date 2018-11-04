@@ -1,5 +1,5 @@
 {
-  "name": "@porter/app",
+  "name": "@porterjs/app",
   "version": "1.0.0",
   "description": "porter app package",
   "repository": {

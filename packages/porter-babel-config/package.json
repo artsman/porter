@@ -1,5 +1,5 @@
 {
-  "name": "@porter/babel-config",
+  "name": "@porterjs/babel-config",
   "version": "1.0.0",
   "description": "porter babel config package",
   "repository": {
