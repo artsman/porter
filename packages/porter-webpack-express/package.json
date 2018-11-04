@@ -25,6 +25,7 @@
   "dependencies": {
     "@porterjs/babel-config": "^1.0.0",
     "@porterjs/config": "^1.0.0",
+    "@porterjs/express": "^1.0.0",
     "@porterjs/webpack": "^1.0.0",
     "express-nunjucks": "^2.2.3",
     "nunjucks": "^3.1.3"
