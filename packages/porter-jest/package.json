@@ -1,0 +1,32 @@
+{
+  "name": "@porterjs/jest",
+  "version": "1.0.0",
+  "description": "porter jest package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "jest"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "porter-jest": "src/bin/jest.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.1.2",
+    "@porterjs/babel-config": "^1.0.0",
+    "@porterjs/config": "^1.0.0",
+    "@porterjs/logger": "^1.0.0",
+    "lodash": "^4.17.11",
+    "jest": "^23.6.0"
+  }
+}
