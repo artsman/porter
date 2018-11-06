@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/rollup-demo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "porter rollup demo package",
   "repository": {
     "type": "git",
