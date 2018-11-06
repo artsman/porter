@@ -9,7 +9,7 @@ const porterConfig = loadPorterConfig(process.cwd(), process.argv);
 const { babel } = porterConfig;
 const { targets, options, presets, plugins } = babel;
 
-const babelConfig = createBabelConfig({ targets, options, mode: 'not-production', modules: true, presets, plugins });
+const babelConfig = createBabelConfig({ targets, options, mode: 'test', modules: true, presets, plugins });
 
 function isCompilableExtension(filename, forcedExts) {
   const exts = forcedExts || babelCore.DEFAULT_EXTENSIONS;
