@@ -68,8 +68,8 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
         for (let alias of Object.keys(packageResolveMap[type])) {
           const resolveObject = packageResolveMap[type][alias];
           const { rootPath, srcPath, entryFile, configFile } = (typeof resolveObject === 'string' ? { entryFile: resolveObject } : resolveObject);
-          const localPath = path.join(rootPath || '', srcPath || '');
-          const localFile = path.join(localPath, entryFile);
+          const localPath = (rootPath !== void 0 || srcPath !== void 0) ? path.join(rootPath || '', srcPath || '') : path.join(entryFile, '../');
+          const localFile = (rootPath !== void 0 || srcPath !== void 0) ? path.join(localPath, entryFile) : entryFile;
           const localConfig = (type === 'js' && configFile !== undefined) ? path.join(rootPath || '', configFile) : null;
           try {
             foundPath = path.resolve(packagePath, localPath);
