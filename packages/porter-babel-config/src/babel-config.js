@@ -26,6 +26,12 @@ const porterBabelPluginProductionFunctionMap = {
   }
 };
 
+const porterBabelPluginTestMap = {
+  rewire: "babel-plugin-rewire"
+};
+
+const porterBabelPluginTestFunctionMap = {};
+
 const porterBabelPluginList = [
   "decorators",
   "classProperties",
@@ -33,7 +39,8 @@ const porterBabelPluginList = [
   "reactJsx",
   "forOfAsArray",
   "reactRemovePropTypes",
-  "transformImportsMap"
+  "transformImportsMap",
+  "rewire"
 ];
 
 
@@ -54,6 +61,14 @@ function getPluginsForOptions(options, mode) {
         }
         else if (porterBabelPluginProductionFunctionMap[plugin]) {
           plugins.push(porterBabelPluginProductionFunctionMap[plugin](options[plugin]));
+        }
+      }
+      else if (mode === "test") {
+        if (porterBabelPluginTestMap[plugin]) {
+          plugins.push(porterBabelPluginTestMap[plugin]);
+        }
+        else if (porterBabelPluginTestFunctionMap[plugin]) {
+          plugins.push(porterBabelPluginTestFunctionMap[plugin](options[plugin]));
         }
       }
     }
