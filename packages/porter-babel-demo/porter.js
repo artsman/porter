@@ -12,7 +12,8 @@ module.exports = {
       reactJsx: false,
       forOfAsArray: false,
       reactRemovePropTypes: false,
-      transformImportsMap: false
+      transformImportsMap: false,
+      rewire: false
     },
     inputPath: "src",
     cjsOutputPath: "lib",

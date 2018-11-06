@@ -16,7 +16,8 @@ module.exports = {
       reactJsx: true,
       forOfAsArray: false,
       reactRemovePropTypes: true,
-      transformImportsMap: {}
+      transformImportsMap: {},
+      rewire: false
     }
   },
   webpack: {
