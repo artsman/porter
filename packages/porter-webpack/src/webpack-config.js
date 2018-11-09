@@ -37,7 +37,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const { babel, webpack } = porterConfig;
   const { targets, options } = babel;
 
-  const babelConfig = createBabelConfig({ targets, options, mode, modules: true });
+  const babelConfig = createBabelConfig({ targets, options, mode, modules: false });
 
   const {
     srcPaths, css, sass, html, polyfills, entry: mainEntry, split, vendor, splitVendor,
