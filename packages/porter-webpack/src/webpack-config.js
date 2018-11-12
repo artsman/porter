@@ -390,7 +390,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       const localPorterConfig = require(resolvedPorterConfigPath);
       const { babel: localBabel } = localPorterConfig;
       const { targets: localTargets, options: localOptions } = localBabel;
-      const localBabelConfig = createBabelConfig({ targets: localTargets, options: localOptions, mode, modules: true });
+      const localBabelConfig = createBabelConfig({ targets: localTargets, options: localOptions, mode, modules: false });
       rules.push(
         {
           test: /\.js$/,
