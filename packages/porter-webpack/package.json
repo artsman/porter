@@ -24,7 +24,7 @@
     "porter-webpack-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.1.5",
+    "@babel/core": "^7.1.6",
     "@babel/polyfill": "^7.0.0",
     "@porterjs/babel-config": "^1.0.4",
     "@porterjs/config": "^1.0.0",
