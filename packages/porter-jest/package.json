@@ -22,7 +22,7 @@
     "porter-jest": "src/bin/jest.js"
   },
   "dependencies": {
-    "@babel/core": "^7.1.6",
+    "@babel/core": "^7.2.2",
     "@porterjs/babel-config": "^1.0.4",
     "@porterjs/config": "^1.0.0",
     "@porterjs/logger": "^1.0.0",
