@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/babel-demo",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "porter babel demo package",
   "repository": {
     "type": "git",
@@ -18,6 +18,6 @@
     "clean": "porter-babel-clean"
   },
   "dependencies": {
-    "@porterjs/babel": "^1.0.4"
+    "@porterjs/babel": "^1.0.5"
   }
 }
