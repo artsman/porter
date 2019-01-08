@@ -70,7 +70,7 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
       }
       else {
         app.use(function (req, res, next) {
-          req.url = publicPath;
+          req.url = webpackConfig.output.publicPath;
           return middleware(req, res, next);
         });
       }
