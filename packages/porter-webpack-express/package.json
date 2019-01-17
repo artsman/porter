@@ -28,6 +28,6 @@
     "@porterjs/express": "^1.0.5",
     "@porterjs/webpack": "^1.0.5",
     "express-nunjucks": "^2.2.3",
-    "nunjucks": "^3.1.6"
+    "nunjucks": "^3.1.7"
   }
 }

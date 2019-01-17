@@ -1,8 +1,8 @@
 {
 	"private": true,
 	"devDependencies": {
-		"lerna": "^3.8.0",
-		"rimraf": "^2.6.2"
+		"lerna": "^3.10.5",
+		"rimraf": "^2.6.3"
 	},
 	"workspaces": [
 		"packages/*"
