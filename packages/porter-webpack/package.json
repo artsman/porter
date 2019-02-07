@@ -47,7 +47,7 @@
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.28.4",
+    "webpack": "^4.29.3",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-sentry-plugin": "^1.16.0",
     "whatwg-fetch": "^3.0.0"
