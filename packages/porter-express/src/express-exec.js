@@ -146,7 +146,7 @@ function addProxySocket(expressServer, proxyConfig) {
  * @param expressConfig - The server config object
  * @param basePath - The base path to resolve files from
  */
-module.exports = function startExpressServer({ expressConfig, basePath, staticMap, mode, logger = console, addMiddleware = null }) {
+module.exports = function startExpressServer({ expressConfig, basePath, mode, logger = console, addMiddleware = null }) {
   const app = express();
 
   /**
@@ -164,7 +164,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, staticMa
    * openBrowser - A boolean flag that when true will cause a browser window to open to the server host after the server is started
    * compress - A boolean flag that when true will enable compression of all responses from the server
    * serviceWorkerPath - the path to the service worker source file to be servered from /sw.js
-   * staticMap - a map of server request paths to actual file paths to be served statically by the server
+   * staticMap - a map of server request paths to relative file paths to be served statically by the server (syntax ex: { "/static/": "/filePath"})
    * proxy - the configuration for the server's proxying capabilities
    *   proxyHost - The host to proxy requests to
    *   proxyHttpPaths - The list of http/https paths to proxy to the proxyHost
@@ -174,7 +174,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, staticMa
    *   proxyHeaderKeysExtra - An array of strings that when not undefined will be added to the headers that get proxied to/from the proxyHost
    */
   const {
-    productName, host, port, secure, openBrowser, compress, serviceWorkerPath, proxy
+    productName, host, port, secure, openBrowser, compress, serviceWorkerPath, staticMap, proxy
   } = expressConfig;
 
   if (compress) {
