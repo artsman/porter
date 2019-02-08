@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackDeployAssetsPlugin = require('html-webpack-deploy-assets-plugin');
@@ -208,7 +208,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
 
   let optimization = (isDev || !minify) ? {} : {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
         sourceMap: true
