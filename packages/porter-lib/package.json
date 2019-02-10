@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@porterjs/babel": "^1.0.6",
+    "@porterjs/merge-css": "^1.0.6",
     "@porterjs/rollup": "^1.0.6",
     "@porterjs/version": "^1.0.6"
   }

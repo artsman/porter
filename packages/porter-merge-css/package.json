@@ -1,0 +1,32 @@
+{
+  "name": "@porterjs/merge-css",
+  "version": "1.0.6",
+  "description": "porter merge-css package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "merge",
+    "css"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "porter-merge-css": "src/bin/merge-css.js"
+  },
+  "dependencies": {
+    "@porterjs/config": "^1.0.0",
+    "@porterjs/logger": "^1.0.0",
+    "concat": "^1.0.3",
+    "glob": "^7.1.3",
+    "mkdirp": "^0.5.1"
+  }
+}
