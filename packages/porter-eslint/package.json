@@ -1,0 +1,35 @@
+{
+  "name": "@porterjs/eslint",
+  "version": "1.0.7",
+  "description": "porter eslint package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "eslint"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "porter-eslint": "src/bin/eslint.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/register": "^7.0.0",
+    "@porterjs/babel-config": "^1.0.7",
+    "@porterjs/config": "^1.0.0",
+    "@porterjs/logger": "^1.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-react": "^7.12.4"
+  }
+}

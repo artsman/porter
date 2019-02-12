@@ -1,0 +1,23 @@
+{
+  "name": "@porterjs/eslint-demo",
+  "version": "1.0.7",
+  "description": "porter eslint demo package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "eslint"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "porter-eslint -L -F {\\\"babel\\\":{\\\"a\\\":true}}",
+    "eslint": "eslint src"
+  },
+  "dependencies": {
+    "@porterjs/eslint": "^1.0.7"
+  }
+}
