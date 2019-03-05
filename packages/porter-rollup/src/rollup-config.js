@@ -4,7 +4,7 @@ const rollupBabel = require('rollup-plugin-babel');
 const node = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const license = require('rollup-plugin-license');
-const uglify = require('rollup-plugin-uglify').uglify;
+const terser = require('rollup-plugin-terser').terser;
 const rollupAnalyzer = require('rollup-plugin-analyzer').plugin;
 
 const createBabelConfig = require('./babel-config');
@@ -41,12 +41,12 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
   };
 
   if (minify) {
-    let uglifyOptions = {
+    let terserOptions = {
       compress: {
         negate_iife: false
       }
     };
-    config.plugins.push(uglify(uglifyOptions));
+    config.plugins.push(terser(terserOptions));
   }
   if (licenseFile !== false) {
     config.plugins.push(
