@@ -21,13 +21,13 @@
   },
   "dependencies": {
     "@porterjs/app": "^1.0.7",
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
     "bootstrap-4-theme": "^1.0.2",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-hot-helpers": "^1.0.1",
     "react-router": "^4.3.1",
     "react-router-routes": "^1.0.3",
-    "react-router-split-routes": "^1.0.7"
+    "react-router-split-routes": "^1.0.8"
   }
 }
