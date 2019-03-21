@@ -146,7 +146,7 @@ function addProxySocket(expressServer, proxyConfig) {
  * @param expressConfig - The server config object
  * @param basePath - The base path to resolve files from
  */
-module.exports = function startExpressServer({ expressConfig, basePath, mode, logger = console, addMiddleware = null }) {
+module.exports = function startExpressServer({ expressConfig, basePath, mode, logger = console, addMiddleware = null, onStart }) {
   const app = express();
 
   /**
@@ -156,7 +156,6 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
    * productName - The name of the project
    * host - The host to print to the console
    * port - The port to start the server on
-   * mode - The mode the server is running in
    *
    * OPTIONAL
    * keyPath - The path to the HTTPS key file, when set the server to start in https mode (* when both set)
@@ -189,7 +188,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
 
   if (staticMap) {
     for (let staticPath in staticMap) {
-      app.use(staticPath, express.static(basePath + staticMap[staticPath]));
+      app.use(staticPath, express.static(path.join(basePath, staticMap[staticPath])));
     }
 
     for (let staticPath in staticMap) {
@@ -217,7 +216,9 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
     expressServer = http.createServer(app);
   }
 
-  addProxySocket(expressServer, proxy);
+  if (proxy) {
+    addProxySocket(expressServer, proxy);
+  }
 
   let theServer;
 
@@ -229,6 +230,9 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
       logger.log(`===> ${productName} on port ${port} in ${mode} mode. ${openBrowser ? 'Opening' : 'Open up'} ${secure ? 'https://' : 'http://'}${host}:${port}/ in your browser.`);
       if (openBrowser) {
         open(host);
+      }
+      if (onStart) {
+        onStart();
       }
     }
   }

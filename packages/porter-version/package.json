@@ -24,6 +24,6 @@
   "dependencies": {
     "@porterjs/config": "^1.0.0",
     "@porterjs/logger": "^1.0.0",
-    "replace-in-file": "^3.4.3"
+    "replace-in-file": "^3.4.4"
   }
 }
