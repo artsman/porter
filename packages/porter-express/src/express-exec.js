@@ -162,7 +162,6 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
    * certPath - The path to the HTTPS certificate file, when set the server to start in https mode
    * openBrowser - A boolean flag that when true will cause a browser window to open to the server host after the server is started
    * compress - A boolean flag that when true will enable compression of all responses from the server
-   * serviceWorkerPath - the path to the service worker source file to be servered from /sw.js
    * staticMap - a map of server request paths to relative file paths to be served statically by the server (syntax ex: { "/static/": "/filePath"})
    * proxy - the configuration for the server's proxying capabilities
    *   proxyHost - The host to proxy requests to
@@ -173,17 +172,11 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
    *   proxyHeaderKeysExtra - An array of strings that when not undefined will be added to the headers that get proxied to/from the proxyHost
    */
   const {
-    productName, host, port, secure, openBrowser, compress, serviceWorkerPath, staticMap, proxy
+    productName, host, port, secure, openBrowser, compress, staticMap, proxy
   } = expressConfig;
 
   if (compress) {
     app.use(compression());
-  }
-
-  if (serviceWorkerPath) {
-    app.get('/sw.js', function (req, res) {
-      res.sendFile(path.resolve(basePath, serviceWorkerPath));
-    });
   }
 
   if (staticMap) {
