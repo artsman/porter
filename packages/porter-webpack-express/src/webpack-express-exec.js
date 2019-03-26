@@ -14,10 +14,10 @@ module.exports = function startWebpackExpressServer({ porterConfig, basePath, we
       res.status(404).send('File Not Found');
     });
     if (webpack.html) {
-      const indexPath = path.resolve(basePath, webpackConfig.output.path, webpack.html.indexFilename);
-      const { templateObject } = expressConfig;
+      const indexFilePath = path.resolve(basePath, webpackConfig.output.path, webpack.html.indexFilename);
+      const { indexPath = '/', templateObject } = expressConfig;
       if (templateObject) {
-        app.set('views', path.dirname(indexPath));
+        app.set('views', path.dirname(indexFilePath));
         expressNunjucks(app, {
           watch: false,
           noCache: false,
@@ -34,13 +34,14 @@ module.exports = function startWebpackExpressServer({ porterConfig, basePath, we
             templateContent[key] = value;
           }
         }
-        app.use(function (req, res, next) {
+
+        app.use(indexPath, function (req, res, next) {
           res.render('index', templateContent);
         });
       }
       else {
-        app.use(function (req, res, next) {
-          res.sendFile(indexPath);
+        app.use(indexPath, function (req, res, next) {
+          res.sendFile(indexFilePath);
         });
       }
     }

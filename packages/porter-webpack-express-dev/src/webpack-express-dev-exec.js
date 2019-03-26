@@ -38,11 +38,11 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
     }
 
     if (webpack.html) {
-      const { templateObject } = expressConfig;
+      const { indexPath = '/', templateObject } = expressConfig;
       if (templateObject) {
-        const indexPath = path.resolve(basePath, webpackConfig.output.path, webpack.html.indexFilename);
+        const indexFilePath = path.resolve(basePath, webpackConfig.output.path, webpack.html.indexFilename);
         let nunjucksEnv = new nunjucks.Environment([], { autoescape: false });
-        app.set('views', path.dirname(indexPath));
+        app.set('views', path.dirname(indexFilePath));
         expressNunjucks(app, {
           watch: true,
           noCache: true,
@@ -59,18 +59,18 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
             templateContent[key] = value;
           }
         }
-        app.use(function (req, res, next) {
+        app.use(indexPath, function (req, res, next) {
           middleware.waitUntilValid(function () {
             let memoryFs = compiler.outputFileSystem;
-            let indexFile = memoryFs.readFileSync(indexPath, 'utf8');
+            let indexFile = memoryFs.readFileSync(indexFilePath, 'utf8');
             let renderString = nunjucksEnv.renderString(indexFile, templateContent);
             res.send(renderString);
           });
         });
       }
       else {
-        app.use(function (req, res, next) {
-          req.url = webpackConfig.output.publicPath;
+        app.use(indexPath, function (req, res, next) {
+          req.url = publicPath;
           return middleware(req, res, next);
         });
       }
