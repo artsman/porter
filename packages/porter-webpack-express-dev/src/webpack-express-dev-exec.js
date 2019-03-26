@@ -10,6 +10,7 @@ const { createWebpackConfig } = require('@porterjs/webpack');
 module.exports = function startWebpackExpressDevServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: true });
   const { express: expressConfig, webpack } = porterConfig;
+  const { publicPath, reroutes } = webpack;
 
   function addMiddleware(app) {
     let compiler = Webpack(webpackConfig);
@@ -21,7 +22,7 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
       {
         stats: 'errors-only',
         noInfo: true,
-        publicPath: webpackConfig.output.publicPath,
+        publicPath: publicPath,
         index: webpack.html ? webpack.html.indexFilename : false,
         logger: {
           trace: loggerLogWrapper,
@@ -32,6 +33,18 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
         }
       }
     );
+
+    if (reroutes) {
+      for (let reroute of Object.keys(reroutes)) {
+        app.use(reroute, function (req, res, next) {
+          // middleware.waitUntilValid(function () {
+          req.url = path.join(publicPath, reroutes[reroute]);
+          middleware(req, res, next);
+          // });
+        });
+      }
+    }
+
     app.use(middleware);
     if (webpack.hotModuleReplacement) {
       app.use(webpackHotMiddleware(compiler));
