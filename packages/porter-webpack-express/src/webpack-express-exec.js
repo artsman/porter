@@ -7,10 +7,21 @@ const { createWebpackConfig, webpackExec } = require('@porterjs/webpack');
 module.exports = function startWebpackExpressServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: false });
   const { express: expressConfig, webpack } = porterConfig;
+  const { publicPath, reroutes } = webpack;
 
   function addMiddleware(app) {
-    app.use(webpackConfig.output.publicPath, express.static(webpackConfig.output.path));
-    app.use(webpackConfig.output.publicPath, function (req, res) {
+    const staticMiddleware = express.static(webpackConfig.output.path);
+
+    if (reroutes) {
+      for (let reroute of Object.keys(reroutes)) {
+        app.use(reroute, function (req, res, next) {
+          req.url = reroutes[reroute];
+          staticMiddleware(req, res, next);
+        });
+      }
+    }
+    app.use(publicPath, staticMiddleware);
+    app.use(publicPath, function (req, res) {
       res.status(404).send('File Not Found');
     });
     if (webpack.html) {
