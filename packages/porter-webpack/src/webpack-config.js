@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackDeployAssetsPlugin = require('html-webpack-deploy-assets-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryPlugin = require('webpack-sentry-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const createBabelConfig = require("@porterjs/babel-config");
 
@@ -46,7 +47,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     deployAssetMap, deployPackageAssetMap, deployPackagePath, localPackageAssetMap,
     resolveMap, resolvePackagePath, localResolveMap, localResolvePackagePath,
     minify, hotModuleReplacement, reactHotLoader,
-    reportFilename, sentry, sentryUpload
+    reportFilename, sentry, sentryUpload, serviceWorker
   } = webpack;
 
   const bundleNameJS = bundleName + '.js';
@@ -353,6 +354,42 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   if (sentryUpload && sentry) {
     plugins.push(
       new SentryPlugin(sentry)
+    );
+  }
+
+  if (serviceWorker) {
+    const {
+      inputPath,
+      publicPath: swPublicPath = publicPath,
+      filename = 'sw.js',
+      excludes = ['**/.*', '**/*.map', '**/*.hot-update.json'],
+      includes = []
+    } = serviceWorker;
+    // console.log('sw?! ', path.join(basePath, inputPath));
+    const swPublicPathLength = swPublicPath.length;
+    const pathReplacer = swPublicPath === publicPath ? asset => asset : asset => publicPath + asset.substring(swPublicPathLength);
+
+    plugins.push(
+      new ServiceWorkerWebpackPlugin({
+        entry: path.join(basePath, inputPath),
+        publicPath: swPublicPath,
+        filename,
+        excludes,
+        includes,
+        transformOptions: ({ assets }) => {
+          const indexPath = html ? swPublicPath + html.indexFilename : false;
+          const newAssets = assets.map(asset => {
+            return asset === indexPath ? swPublicPath : pathReplacer(asset);
+          });
+
+          // console.log('old assets: ' + JSON.stringify(assets, null, '\n'));
+          // console.log('new assets: ' + JSON.stringify(newAssets, null, '\n'));
+
+          return {
+            assets: newAssets
+          }
+        }
+      })
     );
   }
 
