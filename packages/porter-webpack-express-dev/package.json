@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/webpack-express-dev",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "porter webpack express dev package",
   "repository": {
     "type": "git",
@@ -24,10 +24,10 @@
     "porter-webpack-express-dev": "src/bin/webpack-express-dev.js"
   },
   "dependencies": {
-    "@porterjs/babel-config": "^1.0.8",
+    "@porterjs/babel-config": "^1.0.9",
     "@porterjs/config": "^1.0.0",
-    "@porterjs/express": "^1.0.7",
-    "@porterjs/webpack": "^1.0.8",
+    "@porterjs/express": "^1.0.9",
+    "@porterjs/webpack": "^1.0.9",
     "express-nunjucks": "^2.2.3",
     "nunjucks": "^3.2.0",
     "react-hot-loader": "4.8.0",

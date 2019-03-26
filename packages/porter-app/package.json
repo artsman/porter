@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/app",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "porter app package",
   "repository": {
     "type": "git",
@@ -17,8 +17,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@porterjs/webpack": "^1.0.8",
-    "@porterjs/webpack-express": "^1.0.8",
-    "@porterjs/webpack-express-dev": "^1.0.8"
+    "@porterjs/webpack": "^1.0.9",
+    "@porterjs/webpack-express": "^1.0.9",
+    "@porterjs/webpack-express-dev": "^1.0.9"
   }
 }
