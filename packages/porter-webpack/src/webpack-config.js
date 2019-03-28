@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackDeployAssetsPlugin = require('html-webpack-deploy-assets-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryPlugin = require('webpack-sentry-plugin');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-dev-plugin');
 
 const createBabelConfig = require("@porterjs/babel-config");
 
@@ -207,7 +207,10 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       new Webpack.ProvidePlugin(globalPackageMap));
   }
 
-  let optimization = (isDev || !minify) ? {} : {
+  let optimization = (isDev || !minify) ? {
+    minimize: false
+  } : {
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         cache: true,
@@ -362,7 +365,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       inputPath,
       publicPath: swPublicPath = publicPath,
       filename = 'sw.js',
-      excludes = ['**/.*', '**/*.map', '**/*.hot-update.json'],
+      excludes = ['**/.*', '**/*.map', '**/*.hot-update.json', '**/*.hot-update.js'],
       includes = []
     } = serviceWorker;
     // console.log('sw?! ', path.join(basePath, inputPath));

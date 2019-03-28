@@ -43,7 +43,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "raw-loader": "^2.0.0",
     "rimraf": "^2.6.3",
-    "serviceworker-webpack-plugin": "^1.0.1",
+    "serviceworker-webpack-dev-plugin": "^1.0.3",
     "split-chunk-loader": "^1.0.1",
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.2.3",
