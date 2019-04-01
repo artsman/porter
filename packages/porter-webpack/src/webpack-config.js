@@ -38,8 +38,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const { babel, webpack } = porterConfig;
   const { targets, options } = babel;
 
-  const babelConfig = createBabelConfig({ targets, options, mode, modules: false });
-
   const {
     srcPaths, css, sass, html, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
@@ -49,6 +47,8 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     minify, hotModuleReplacement, reactHotLoader,
     reportFilename, sentry, sentryUpload, serviceWorker
   } = webpack;
+
+  const babelConfig = createBabelConfig({ targets, options: { ...options, reactHotLoader }, mode, modules: false });
 
   const bundleNameJS = bundleName + '.js';
   const bundleNameCSS = bundleName + '.css';
@@ -180,9 +180,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       entryValues.push('eventsource-polyfill');
     }
     entryValues.push('webpack-hot-middleware/client?reload=true');
-    if (reactHotLoader) {
-      entryValues.push('react-hot-loader/patch');
-    }
   }
   if (Array.isArray(mainEntry.files)) {
     entryValues = entryValues.concat(mainEntry.files);
@@ -210,20 +207,20 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   let optimization = (isDev || !minify) ? {
     minimize: false
   } : {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true
-      }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          map: { inline: false, annotations: true }
-        }
-      })
-    ]
-  };
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: true
+        }),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            map: { inline: false, annotations: true }
+          }
+        })
+      ]
+    };
 
   if (split) {
     optimization = {
@@ -511,11 +508,26 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     module,
     target
   };
+  let extraConfig = {};
   if (resolveEnabled) {
-    config = Object.assign({}, config, {
+    if (isDev && reactHotLoader) {
+      resolve.alias['react-dom'] = '@hot-loader/react-dom';
+    }
+    extraConfig = {
       resolve,
       resolveLoader
-    });
+    };
   }
+  else if (isDev && reactHotLoader) {
+    extraConfig = {
+      resolve: {
+        alias: {}
+      }
+    };
+  }
+  if (isDev && reactHotLoader) {
+    extraConfig.resolve.alias['react-dom'] = '@hot-loader/react-dom';
+  }
+  config = Object.assign({}, config, extraConfig);
   return config;
 };

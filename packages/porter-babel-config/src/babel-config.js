@@ -6,11 +6,17 @@ const porterBabelPluginMap = {
   forOfAsArray: "babel-plugin-transform-for-of-as-array"
 };
 
+const porterBabelPluginFunctionMap = {};
+
+const porterBabelPluginDevelopmentMap = {
+  reactHotLoader: "react-hot-loader/babel"
+};
+
+const porterBabelPluginDevelopmentFunctionMap = {};
+
 const porterBabelPluginProductionMap = {
   reactRemovePropTypes: "babel-plugin-transform-react-remove-prop-types"
 };
-
-const porterBabelPluginFunctionMap = {};
 
 const porterBabelPluginProductionFunctionMap = {
   transformImportsMap: function (transformMap) {
@@ -43,8 +49,6 @@ const porterBabelPluginList = [
   "rewire"
 ];
 
-
-
 function getPluginsForOptions(options, mode) {
   const plugins = [];
   for (let plugin of porterBabelPluginList) {
@@ -54,6 +58,14 @@ function getPluginsForOptions(options, mode) {
       }
       else if (porterBabelPluginFunctionMap[plugin]) {
         plugins.push(porterBabelPluginFunctionMap[plugin](options[plugin]));
+      }
+      else if (mode === "development") {
+        if (porterBabelPluginDevelopmentMap[plugin]) {
+          plugins.push(porterBabelPluginDevelopmentMap[plugin]);
+        }
+        else if (porterBabelPluginDevelopmentFunctionMap[plugin]) {
+          plugins.push(porterBabelPluginDevelopmentFunctionMap[plugin](options[plugin]));
+        }
       }
       else if (mode === "production") {
         if (porterBabelPluginProductionMap[plugin]) {

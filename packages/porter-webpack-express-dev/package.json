@@ -24,6 +24,7 @@
     "porter-webpack-express-dev": "src/bin/webpack-express-dev.js"
   },
   "dependencies": {
+    "@hot-loader/react-dom": "^16.8.6",
     "@porterjs/babel-config": "^1.0.9",
     "@porterjs/config": "^1.0.0",
     "@porterjs/express": "^1.0.9",
