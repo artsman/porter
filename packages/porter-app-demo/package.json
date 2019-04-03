@@ -27,7 +27,7 @@
     "react-dom": "^16.8.6",
     "react-hot-helpers": "^1.0.1",
     "react-router": "^5.0.0",
-    "react-router-routes": "^1.0.3",
-    "react-router-split-routes": "^1.0.8"
+    "react-router-routes": "^1.0.4",
+    "react-router-split-routes": "^1.0.9"
   }
 }
