@@ -42,7 +42,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     srcPaths, css, sass, html, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
     defineMap, noParse, noopRegexps,
-    deployAssetMap, deployPackageAssetMap, deployPackagePath, localPackageAssetMap,
+    deployAssetMap, deployAssetLinks, deployPackageAssetMap, deployPackagePath, localPackageAssetMap,
     resolveMap, resolvePackagePath, localResolveMap, localResolvePackagePath,
     minify, hotModuleReplacement, reactHotLoader,
     reportFilename, sentry, sentryUpload, serviceWorker
@@ -314,6 +314,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     plugins.push(new HtmlWebpackDeployAssetsPlugin({
       packagePath: deployPackagePath,
       assets: deployAssetMap,
+      links: deployAssetLinks,
       packages: localDeployPackageAssetMap
     }));
   }
@@ -321,6 +322,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     plugins.push(new HtmlWebpackDeployAssetsPlugin({
       packagePath: deployPackagePath,
       assets: deployAssetMap,
+      links: deployAssetLinks,
       packages: deployPackageAssetMap
     }));
   }
