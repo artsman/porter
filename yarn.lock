@@ -5082,18 +5082,18 @@ html-minifier@^3.2.3:
     relateurl "0.2.x"
     uglify-js "3.4.x"
 
-html-webpack-deploy-assets-plugin@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/html-webpack-deploy-assets-plugin/-/html-webpack-deploy-assets-plugin-1.0.2.tgz#28e03f8c127c214fb7c704c590157aa1a4623b8b"
-  integrity sha512-RFDMOE1TgdU4ccZEk0RSQNPghekSrdckATPnQfU/79t+eUtswdJ0pThUEllJEH9FVKi+0/rgJbSbmf5xLy25nw==
+html-webpack-deploy-assets-plugin@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/html-webpack-deploy-assets-plugin/-/html-webpack-deploy-assets-plugin-1.0.3.tgz#a2b78d5bc0b21659dad553edfbee58bfb403217d"
+  integrity sha512-8Bk+pW7vlnYUqOnJbrUEbkuEqigzsj0xJEolC/2+5YscOcfaWHr5H+7VX1UjaeurXn5ZaNlPRsqxIH7nmFBULQ==
   dependencies:
     copy-webpack-plugin "^5.0.2"
-    html-webpack-include-assets-plugin "^1.0.8"
+    html-webpack-include-assets-plugin "^1.0.9"
 
-html-webpack-include-assets-plugin@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/html-webpack-include-assets-plugin/-/html-webpack-include-assets-plugin-1.0.8.tgz#7efea76c4d44b31331579ba809a9c7222c305d3d"
-  integrity sha512-vaAkZJkwY1A4Au0TSboorY407HHut8iZ/guZDF9vxWnYNw+Y367BQS7RxfJ4J4w6hUJdgiUxGWvQE1Sd87Ao/g==
+html-webpack-include-assets-plugin@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/html-webpack-include-assets-plugin/-/html-webpack-include-assets-plugin-1.0.9.tgz#28a4e69a2d3407b8ab364fb27a24e26cc9237b1a"
+  integrity sha512-AC+YDHG6WU9gdmwK+UOzvj9MyKXj7MxR67fAKjTZ1zcsvjojSoaG9lKFnhos/VPAyzkOsZ/TNR+W0p4RsPUKOQ==
   dependencies:
     glob "^7.1.3"
     minimatch "^3.0.4"
