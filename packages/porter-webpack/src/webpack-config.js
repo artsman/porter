@@ -276,13 +276,18 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   }
 
   if (html) {
+    const htmlOptions = {
+      filename: html.indexFilename,
+      template: html.templatePath
+    };
+    if (html.inject !== void 0) {
+      htmlOptions.inject = html.inject;
+    }
+    if (html.chunksSortMode !== void 0) {
+      htmlOptions.chunksSortMode = html.chunksSortMode;
+    }
     plugins.push(
-      new HtmlWebpackPlugin({
-        filename: html.indexFilename,
-        template: html.templatePath,
-        inject: false,
-        chunksSortMode: 'none'
-      })
+      new HtmlWebpackPlugin(htmlOptions)
     );
   }
 
@@ -314,7 +319,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     plugins.push(new HtmlWebpackDeployAssetsPlugin({
       packagePath: deployPackagePath,
       assets: deployAssetMap,
-      links: deployAssetLinks,
+      cssAssets: deployAssetLinks,
       packages: localDeployPackageAssetMap
     }));
   }
@@ -322,7 +327,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     plugins.push(new HtmlWebpackDeployAssetsPlugin({
       packagePath: deployPackagePath,
       assets: deployAssetMap,
-      links: deployAssetLinks,
+      cssAssets: deployAssetLinks,
       packages: deployPackageAssetMap
     }));
   }
