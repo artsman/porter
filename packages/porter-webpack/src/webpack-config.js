@@ -59,51 +59,63 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   let typeToLocalPathsMaps = {}, aliasToLocalPathMap = {}, aliasToJSPathMap = {}, aliasToPorterConfigMap = {};
 
   if (resolveEnabled) {
-    function applyPaths(packageResolveMap, packagePath, description, exitOnError = false) {
+    let modulePackages = ['node_modules'];
+
+    function applyResolves(theResolveMap, thePackagePath, description, exitOnError = false) {
+      const packagePath = path.join(basePath, thePackagePath || 'node_modules');
+
       let stats, foundPath, foundFile, foundConfig, allFound = true, typeToLocal;
-      for (let type of Object.keys(packageResolveMap)) {
+      for (let type of Object.keys(theResolveMap)) {
         typeToLocal = typeToLocalPathsMaps[type];
         if (!typeToLocal) {
           typeToLocalPathsMaps[type] = typeToLocal = [];
         }
-        for (let alias of Object.keys(packageResolveMap[type])) {
-          const resolveObject = packageResolveMap[type][alias];
+        for (let alias of Object.keys(theResolveMap[type])) {
+          const resolveObject = theResolveMap[type][alias];
           const { rootPath, srcPath, entryFile, configFile } = (typeof resolveObject === 'string' ? { entryFile: resolveObject } : resolveObject);
-          const localPath = (rootPath !== void 0 || srcPath !== void 0) ? path.join(rootPath || '', srcPath || '') : path.join(entryFile, '../');
-          const localFile = (rootPath !== void 0 || srcPath !== void 0) ? path.join(localPath, entryFile) : entryFile;
-          const localConfig = (type === 'js' && configFile !== undefined) ? path.join(rootPath || '', configFile) : null;
-          try {
-            foundPath = path.resolve(packagePath, localPath);
-            foundFile = path.resolve(packagePath, localFile);
-            foundConfig = localConfig !== null ? path.resolve(packagePath, localConfig) : null;
-            if (foundConfig !== null) {
-              stats = fs.statSync(foundConfig);
-              if (stats.isFile()) {
-                aliasToPorterConfigMap[alias] = foundConfig;
-                logger.log(description + ' - resource porter config found: ', type, alias, foundConfig);
+          if (rootPath) {
+            const localConfig = (type === 'js' && configFile !== void 0) ? path.join(rootPath || '', configFile) : null;
+            if (srcPath) {
+              const localPath = path.join(rootPath || '', srcPath || '');
+              const localFile = path.join(localPath, entryFile);
+              try {
+                foundPath = path.resolve(packagePath, localPath);
+                foundFile = path.resolve(packagePath, localFile);
+                foundConfig = localConfig !== null ? path.resolve(packagePath, localConfig) : null;
+                if (foundConfig !== null) {
+                  stats = fs.statSync(foundConfig);
+                  if (stats.isFile()) {
+                    aliasToPorterConfigMap[alias] = foundConfig;
+                    logger.log(description + ' - resource porter config found: ', type, alias, foundConfig);
+                  }
+                  else {
+                    logger.warn(description + ' - resource porter config was not a file: ', type, alias, localConfig);
+                    allFound = false;
+                  }
+                }
+                stats = fs.statSync(foundFile);
+                if (stats.isDirectory() || stats.isFile()) {
+                  aliasToLocalPathMap[alias] = foundFile;
+                  typeToLocal.push(foundPath);
+                  if (type === 'js') {
+                    aliasToJSPathMap[alias] = foundPath;
+                  }
+                  logger.log(description + ' - resource found: ', type, alias, foundFile);
+                }
+                else {
+                  logger.warn(description + ' - resource was not a file or directory: ', type, alias, localFile);
+                  allFound = false;
+                }
               }
-              else {
-                logger.warn(description + ' - resource porter config was not a file: ', type, alias, localConfig);
+              catch (error) {
+                logger.warn(description + ' - error loading resource: ', type, alias, localFile);
                 allFound = false;
               }
             }
-            stats = fs.statSync(foundFile);
-            if (stats.isDirectory() || stats.isFile()) {
-              aliasToLocalPathMap[alias] = foundFile;
-              typeToLocal.push(foundPath);
-              if (type === 'js') {
-                aliasToJSPathMap[alias] = foundPath;
-              }
-              logger.log(description + ' - resource found: ', type, alias, foundFile);
-            }
             else {
-              logger.warn(description + ' - resource was not a file or directory: ', type, alias, localFile);
-              allFound = false;
+              logger.log(description + ' - resource with just rootPath: ', type, alias);
+              aliasToJSPathMap[alias] = rootPath;
             }
-          }
-          catch (error) {
-            logger.warn(description + ' - error loading resource: ', type, alias, localFile);
-            allFound = false;
           }
         }
       }
@@ -113,23 +125,16 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
           process.exit(1);
         }
       }
+      if (modulePackages.indexOf(packagePath) === -1) {
+        modulePackages.push(packagePath);
+      }
     }
-
-    let modulePackages = ['node_modules'];
 
     if (resolveMap) {
-      const packagePath = path.join(basePath, resolvePackagePath || 'node_modules');
-      applyPaths(resolveMap, packagePath, 'Resolve Map', true);
-      if (modulePackages.indexOf(packagePath) === -1) {
-        modulePackages.push(packagePath);
-      }
+      applyResolves(resolveMap, resolvePackagePath, 'Resolve Map', true);
     }
     if (isDev && localResolveMap) {
-      const packagePath = path.join(basePath, localResolvePackagePath || 'node_modules');
-      applyPaths(localResolveMap, packagePath, 'Local Resolve Map');
-      if (modulePackages.indexOf(packagePath) === -1) {
-        modulePackages.push(packagePath);
-      }
+      applyResolves(localResolveMap, localResolvePackagePath, 'Local Resolve Map');
     }
 
     resolve = {
@@ -147,14 +152,14 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   cssPaths = css ? srcPaths : false;
   let loaderCssPaths = css ? loaderSrcPaths : null;
   let resolvedLoaderCssPaths = null;
-  if (resolveEnabled && typeToLocalPathsMaps['css'] !== undefined) {
+  if (resolveEnabled && typeToLocalPathsMaps['css'] !== void 0) {
     resolvedLoaderCssPaths = typeToLocalPathsMaps['css'];
   }
 
   sassPaths = sass ? srcPaths : false;
   let loaderSassPaths = sass ? loaderSrcPaths : null;
   let resolvedLoaderSassPaths = null;
-  if (resolveEnabled && typeToLocalPathsMaps['sass'] !== undefined) {
+  if (resolveEnabled && typeToLocalPathsMaps['sass'] !== void 0) {
     resolvedLoaderSassPaths = typeToLocalPathsMaps['sass'];
   }
 
@@ -197,6 +202,28 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     chunkFilename: bundleNameJS,
     publicPath: publicPath
   };
+  // TODO - add webpack output library and libraryTarget support
+  // if (isDev) {
+  //   output.libraryTarget = 'umd';
+  //   output.library = 'reveal';
+  // }
+
+  // TODO - add webpack externals support
+  // let externals;
+  // if (isDev) {
+  //   externals = {
+  //   'react': { commonjs: 'react' },
+  //     'react-dom': { commonjs: 'react-dom' }
+  //   };
+  //   externals = {
+  //     'react': 'react',
+  //     'react-dom': 'react'
+  //   };
+  //   externals = {
+  //     'react': path.join(basePath, 'node_modules', 'react'),
+  //     'react-dom': path.join(basePath, 'node_modules', 'react-dom'),
+  //   };
+  // }
 
   let plugins = [];
   if (globalPackageMap) {
@@ -430,7 +457,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   for (let resolvedAlias of resolvedAliases) {
     let resolvedLoaderSrcPath = aliasToJSPathMap[resolvedAlias];
     let resolvedPorterConfigPath = aliasToPorterConfigMap[resolvedAlias];
-    if (resolvedPorterConfigPath !== undefined) {
+    if (resolvedPorterConfigPath !== void 0) {
       const localPorterConfig = require(resolvedPorterConfigPath);
       const { babel: localBabel } = localPorterConfig;
       const { targets: localTargets, options: localOptions } = localBabel;
@@ -450,15 +477,34 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       );
     }
     else {
+      let query = {
+        babelrcRoots: resolvedLoaderSrcPath,
+        cacheDirectory: babelCacheDirectory
+      };
+      let include = resolvedLoaderSrcPath;
+
+      const localResolve = localResolveMap.js[resolvedAlias];
+      if (localResolve && !localResolve.srcPath) {
+        // This is a local resolve for a node_module package
+        // The thinking was this might be useable to fix the fact that react-redux uses global state
+        // The attempt was to make react-redux locally resolve to node_modules to be shared by subsequent local resolves resolving the conflicts
+        // example:
+        // "react-redux": {
+        //   rootPath: "./node_modules/react-redux/es/index.js"
+        // }
+        // use the basePath + rootPath as the babel-loader include/entry path
+        query = {
+          babelrc: false,
+          cacheDirectory: babelCacheDirectory
+        };
+        include = path.join(basePath, resolvedLoaderSrcPath);
+      }
       rules.push(
         {
           test: /\.js$/,
           loader: 'babel-loader',
-          query: {
-            babelrcRoots: resolvedLoaderSrcPath,
-            cacheDirectory: babelCacheDirectory
-          },
-          include: resolvedLoaderSrcPath
+          query: query,
+          include: include
         }
       );
     }
@@ -515,6 +561,10 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     module,
     target
   };
+  // TODO - add webpack externals support
+  // if (externals !== void 0) {
+  //   config.externals = externals;
+  // }
   let extraConfig = {};
   if (resolveEnabled) {
     if (isDev && reactHotLoader) {
