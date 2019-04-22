@@ -275,3 +275,100 @@ const porterConfig = {
   },
   localConfigFile: "porter-local.js"
 }
+
+
+
+
+// Add a way to refer to script names in preceding  config
+
+// This lets us group together config nicely with forks for script names
+
+// How do configs access the script names?
+
+// We could make the config a function that takes the script name as an argument and returns the config like this:
+
+// With no script name (i.e. running all scripts) all of the script names will need to be processed
+
+// The ...others properties of the first function argument will hold the porter config
+
+// but this requires that we do a breadth first search on config sections to make sure
+// config section functions are executed in the right order
+
+const scriptedBabelConfigFunction = ({ scriptName, ...others }) => ({
+  targets: scriptName === 'dev' ? ["> 10%"] : ["> 2%"],
+  modules: scriptName === 'dev',
+  // ...others // is this needed?
+  // what does others hold right now? no other functions have run yet
+});
+
+const scriptedWebpackConfigFunction = ({ scriptName, ...others }) => ({
+  mode: scriptName === 'dev' ? "development": "production",
+  // ...others // is this needed?
+  // what does others hold right now? babel config function has run
+  // const { babel: babelConfig } = others;
+});
+
+const scriptedConfigFunctionConfig = {
+  babel: {
+    config: scriptedBabelConfigFunction,
+    scripts: [
+      {
+        name: 'build-es',
+        outputPath: 'es'
+      },
+      {
+        name: "build-lib",
+        outputPath: 'lib'
+      }
+    ]
+  },
+  webpack: {
+    config: scriptedWebpackConfigFunction
+  }
+}
+
+// Or we can allow the config to have strings with variables that get replaced like this:
+
+const scriptedConfigTemplate = {
+  targets: ["> 2%"],
+  modules: true,
+};
+
+
+
+
+const referringPorterConfig = {
+  babel: {
+    config: {
+      targets: [
+        "> 4%",
+        "ie 11",
+        "safari 8"
+      ],
+      modules: true,
+      decorators: true,
+      classProperties: true,
+      objectRestSpread: true,
+      reactJsx: true,
+      forOfAsArray: false,
+      reactRemovePropTypes: false,
+      transformImportsMap: {},
+      runtimeHelper: false,
+      rewire: false
+    },
+    inputPath: 'src',
+    scripts: [
+      {
+        name: 'build-es',
+        outputPath: 'es',
+        config: {
+          modules: false
+        }
+      },
+      {
+        name: "build-lib",
+        outputPath: 'lib'
+      }
+    ]
+  }
+};
