@@ -31,7 +31,7 @@
     "@porterjs/webpack": "^1.0.12",
     "express-nunjucks": "^2.2.3",
     "nunjucks": "^3.2.0",
-    "react-hot-loader": "^4.8.3",
+    "react-hot-loader": "^4.8.4",
     "webpack-dev-middleware": "^3.6.2",
     "webpack-hot-middleware": "^2.24.3"
   }
