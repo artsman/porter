@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackDeployAssetsPlugin = require('html-webpack-deploy-assets-plugin');
+const HtmlWebpackDeployPlugin = require('html-webpack-deploy-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryPlugin = require('webpack-sentry-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-dev-plugin');
@@ -39,10 +39,10 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const { targets, options } = babel;
 
   const {
-    srcPaths, css, sass, html, polyfills, entry: mainEntry, split, vendor, splitVendor,
+    srcPaths, css, sass, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
     defineMap, noParse, noopRegexps,
-    deployAssetMap, deployAssetLinks, deployPackageAssetMap, deployPackagePath, localPackageAssetMap,
+    deployPackageAssetMap,
     resolveMap, resolvePackagePath, localResolveMap, localResolvePackagePath,
     minify, hotModuleReplacement, reactHotLoader,
     reportFilename, sentry, sentryUpload, serviceWorker
@@ -53,7 +53,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const bundleNameJS = bundleName + '.js';
   const bundleNameCSS = bundleName + '.css';
   const resolveEnabled = resolveMap || (isDev && localResolveMap);
-  const localAssetEnabled = isDev && localPackageAssetMap && deployPackageAssetMap;
 
   let resolve, resolveLoader;
   let typeToLocalPathsMaps = {}, aliasToLocalPathMap = {}, aliasToJSPathMap = {}, aliasToPorterConfigMap = {};
@@ -316,47 +315,10 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     plugins.push(
       new HtmlWebpackPlugin(htmlOptions)
     );
-  }
 
-  if (localAssetEnabled) {
-    const localDeployPackageAssetMap = Object.keys(deployPackageAssetMap).reduce((m, package) => {
-      if (localPackageAssetMap[package]) {
-        const deployPackage = deployPackageAssetMap[package];
-        const deployAssets = deployPackage.assets;
-        const localAssetsMap = localPackageAssetMap[package];
-        const localPackage = {
-          entries: deployPackage.entries,
-          assets: Object.keys(deployAssets).reduce((m, asset) => {
-            if (localAssetsMap[asset]) {
-              m[localAssetsMap[asset]] = deployAssets[asset];
-            }
-            else {
-              m[asset] = deployAssets[asset];
-            }
-            return m;
-          }, {})
-        };
-        m[package] = localPackage;
-      }
-      else {
-        m[package] = deployPackageAssetMap[package];
-      }
-      return m;
-    }, {});
-    plugins.push(new HtmlWebpackDeployAssetsPlugin({
-      packagePath: deployPackagePath,
-      assets: deployAssetMap,
-      cssAssets: deployAssetLinks,
-      packages: localDeployPackageAssetMap
-    }));
-  }
-  else if (deployAssetMap || deployPackageAssetMap) {
-    plugins.push(new HtmlWebpackDeployAssetsPlugin({
-      packagePath: deployPackagePath,
-      assets: deployAssetMap,
-      cssAssets: deployAssetLinks,
-      packages: deployPackageAssetMap
-    }));
+    if (htmlDeploy) {
+      plugins.push(new HtmlWebpackDeployPlugin(htmlDeploy));
+    }
   }
 
   if (defineMap) {
