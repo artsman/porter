@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/webpack",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "porter webpack package",
   "repository": {
     "type": "git",

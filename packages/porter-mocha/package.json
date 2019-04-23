@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/mocha",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "porter mocha package",
   "repository": {
     "type": "git",
