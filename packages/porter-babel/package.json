@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/babel",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "porter babel package",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
   "dependencies": {
     "@babel/core": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
-    "@porterjs/babel-config": "^1.0.12",
+    "@porterjs/babel-config": "^1.0.14",
     "@porterjs/config": "^1.0.0",
     "@porterjs/logger": "^1.0.0",
     "fs-readdir-recursive": "^1.1.0",
