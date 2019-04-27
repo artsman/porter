@@ -5088,14 +5088,14 @@ html-minifier@^3.2.3:
     relateurl "0.2.x"
     uglify-js "3.4.x"
 
-html-webpack-deploy-plugin@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/html-webpack-deploy-plugin/-/html-webpack-deploy-plugin-2.0.4.tgz#71c959cb2c6b63b7540e4248cc49ceba31278088"
-  integrity sha512-goGs9ctku8ICWxRRBnkcmuEVxXIoZvBlcWnrxb6ON7DiFVE4xMfDJsiOchBZhkDKiCc+t2kwMXwT4l25z8MxEw==
+html-webpack-deploy-plugin@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/html-webpack-deploy-plugin/-/html-webpack-deploy-plugin-2.0.5.tgz#dc18bc20ee90366b4fe795190882bb10d6f4c8f3"
+  integrity sha512-t9Ds5CnmIQuKHfkobW3n+0guU0f/evQgTkCXFWECl+SicIDqUYHSAxIAOMbXBeAuPHispNx5OThkWCDJG1/heQ==
   dependencies:
     copy-webpack-plugin "^5.0.3"
     find-up "^3.0.0"
-    html-webpack-tags-plugin "^2.0.9"
+    html-webpack-tags-plugin "^2.0.10"
 
 html-webpack-plugin@^3.2.0:
   version "3.2.0"
@@ -5110,10 +5110,10 @@ html-webpack-plugin@^3.2.0:
     toposort "^1.0.0"
     util.promisify "1.0.0"
 
-html-webpack-tags-plugin@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/html-webpack-tags-plugin/-/html-webpack-tags-plugin-2.0.9.tgz#71bbd748b31be8bb0885632c9f277ef7eb8c8472"
-  integrity sha512-XzeBkQcI5jJGl2v9oERIw+Mly5YLMONo6xC2RYLkdqdpNqnTI/ehy4dCpCaEaTGRB5SUyKRkPWpL09/vh2SeYg==
+html-webpack-tags-plugin@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/html-webpack-tags-plugin/-/html-webpack-tags-plugin-2.0.10.tgz#a76179a32fc76e7b23b6759e4f62e339c0199ccc"
+  integrity sha512-2/gzmYAvynRUlmaEQvhW/3V8nlxoNJBAvIbqMzOctnUFRcnPoJ4SQBIRL+709RHVEGinVq6DplhZ2qxOUg0bRA==
   dependencies:
     glob "^7.1.3"
     minimatch "^3.0.4"
