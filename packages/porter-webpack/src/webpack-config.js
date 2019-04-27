@@ -42,7 +42,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     srcPaths, css, sass, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
     defineMap, noParse, noopRegexps,
-    deployPackageAssetMap,
     resolveMap, resolvePackagePath, localResolveMap, localResolvePackagePath,
     minify, hotModuleReplacement, reactHotLoader,
     reportFilename, sentry, sentryUpload, serviceWorker
