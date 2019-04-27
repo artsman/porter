@@ -310,6 +310,8 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     }
     if (html.chunksSortMode !== void 0) {
       htmlOptions.chunksSortMode = html.chunksSortMode;
+    } else {
+      htmlOptions.chunksSortMode = 'none'; // https://github.com/jantimon/html-webpack-plugin/issues/981
     }
     plugins.push(
       new HtmlWebpackPlugin(htmlOptions)
