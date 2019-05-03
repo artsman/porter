@@ -33,6 +33,6 @@
     "mkdirp": "^0.5.1",
     "output-file-sync": "^2.0.1",
     "rimraf": "^2.6.3",
-    "slash": "^2.0.0"
+    "slash": "^3.0.0"
   }
 }
