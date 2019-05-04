@@ -481,7 +481,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       let include = packageSrcPath;
 
       const localPackage = localPackages[packageName];
-      if (localPackage && !localPackage.srcPath) {
+      if (localPackage && localPackage.entry && !localPackage.entry.srcPath) {
         // This is a local resolve for a node_module package
         // The thinking was this might be useable to fix the fact that react-redux uses global state
         // The attempt was to make react-redux locally resolve to node_modules to be shared by subsequent local resolves resolving the conflicts
