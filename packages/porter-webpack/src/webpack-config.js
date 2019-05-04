@@ -42,7 +42,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     srcPaths, css, sass, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
     defineMap, noParse, noopRegexps,
-    resolveMap, resolvePackagePath, localResolveMap, localResolvePackagePath,
+    localPackages,
     minify, hotModuleReplacement, reactHotLoader,
     reportFilename, sentry, sentryUpload, serviceWorker
   } = webpack;
@@ -51,93 +51,76 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
 
   const bundleNameJS = bundleName + '.js';
   const bundleNameCSS = bundleName + '.css';
-  const resolveEnabled = resolveMap || (isDev && localResolveMap);
+  const hasLocalPackages = (isDev && localPackages);
 
   let resolve, resolveLoader;
-  let typeToLocalPathsMaps = {}, aliasToLocalPathMap = {}, aliasToJSPathMap = {}, aliasToPorterConfigMap = {};
+  let packageToSrcPathMap = {};
+  let packageToConfigFileMap = {};
 
-  if (resolveEnabled) {
-    let modulePackages = ['node_modules'];
+  if (hasLocalPackages) {
+    let packageToEntryFileMap = {};
 
-    function applyResolves(theResolveMap, thePackagePath, description, exitOnError = false) {
-      const packagePath = path.join(basePath, thePackagePath || 'node_modules');
+    const modulePackages = ['node_modules', basePath];
 
-      let stats, foundPath, foundFile, foundConfig, allFound = true, typeToLocal;
-      for (let type of Object.keys(theResolveMap)) {
-        typeToLocal = typeToLocalPathsMaps[type];
-        if (!typeToLocal) {
-          typeToLocalPathsMaps[type] = typeToLocal = [];
-        }
-        for (let alias of Object.keys(theResolveMap[type])) {
-          const resolveObject = theResolveMap[type][alias];
-          const { rootPath, srcPath, entryFile, configFile } = (typeof resolveObject === 'string' ? { entryFile: resolveObject } : resolveObject);
-          if (rootPath) {
-            const localConfig = (type === 'js' && configFile !== void 0) ? path.join(rootPath || '', configFile) : null;
-            if (srcPath) {
-              const localPath = path.join(rootPath || '', srcPath || '');
-              const localFile = path.join(localPath, entryFile);
-              try {
-                foundPath = path.resolve(packagePath, localPath);
-                foundFile = path.resolve(packagePath, localFile);
-                foundConfig = localConfig !== null ? path.resolve(packagePath, localConfig) : null;
-                if (foundConfig !== null) {
-                  stats = fs.statSync(foundConfig);
-                  if (stats.isFile()) {
-                    aliasToPorterConfigMap[alias] = foundConfig;
-                    logger.log(description + ' - resource porter config found: ', type, alias, foundConfig);
-                  }
-                  else {
-                    logger.warn(description + ' - resource porter config was not a file: ', type, alias, localConfig);
-                    allFound = false;
-                  }
-                }
-                stats = fs.statSync(foundFile);
-                if (stats.isDirectory() || stats.isFile()) {
-                  aliasToLocalPathMap[alias] = foundFile;
-                  typeToLocal.push(foundPath);
-                  if (type === 'js') {
-                    aliasToJSPathMap[alias] = foundPath;
-                  }
-                  logger.log(description + ' - resource found: ', type, alias, foundFile);
-                }
-                else {
-                  logger.warn(description + ' - resource was not a file or directory: ', type, alias, localFile);
-                  allFound = false;
-                }
+    function processPackages(packageMap, description, exitOnError = true) {
+      let stats, foundSrcPath, foundEntryFile, foundConfigFile, allFound = true;
+      for (let packageName of Object.keys(packageMap)) {
+        const packageObject = packageMap[packageName];
+
+        const { rootPath, entry, copy } = packageObject;
+        if (entry !== void 0) {
+          const { configFile, srcPath, entryFile } = entry;
+          const localConfigFile = (configFile !== void 0) ? path.join(rootPath || '', configFile) : null;
+          const localSrcPath = path.join(rootPath || '', srcPath || '');
+          const localEntryFile = path.join(localSrcPath, entryFile);
+          try {
+            foundSrcPath = path.resolve(basePath, localSrcPath);
+            foundEntryFile = path.resolve(basePath, localEntryFile);
+            foundConfigFile = localConfigFile !== null ? path.resolve(basePath, localConfigFile) : null;
+            if (foundConfigFile !== null) {
+              stats = fs.statSync(foundConfigFile);
+              if (stats.isFile()) {
+                packageToConfigFileMap[packageName] = foundConfigFile;
+                logger.log(description + ' - resource porter config found: ', packageName, foundConfigFile);
               }
-              catch (error) {
-                logger.warn(description + ' - error loading resource: ', type, alias, localFile);
+              else {
+                logger.warn(description + ' - resource porter config was not a file: ', packageName, localConfigFile);
                 allFound = false;
               }
             }
+            stats = fs.statSync(foundEntryFile);
+            if (stats.isDirectory() || stats.isFile()) {
+              packageToEntryFileMap[packageName] = foundEntryFile;
+              packageToSrcPathMap[packageName] = foundSrcPath;
+              logger.log(description + ' - resource found: ', packageName, foundEntryFile);
+            }
             else {
-              logger.log(description + ' - resource with just rootPath: ', type, alias);
-              aliasToJSPathMap[alias] = rootPath;
+              logger.warn(description + ' - resource was not a file or directory: ', packageName, localEntryFile);
+              allFound = false;
             }
           }
+          catch (error) {
+            logger.warn(description + ' - error loading resource: ', packageName, localEntryFile);
+            allFound = false;
+          }
+
+        }
+        if (copy !== void 0) {
+
         }
       }
       if (!allFound) {
-        logger.warn(description + ' - package path for the above errors was: ', packagePath);
+        logger.warn(description + ' - base path for the above errors was: ', basePath);
         if (exitOnError) {
           process.exit(1);
         }
       }
-      if (modulePackages.indexOf(packagePath) === -1) {
-        modulePackages.push(packagePath);
-      }
     }
-
-    if (resolveMap) {
-      applyResolves(resolveMap, resolvePackagePath, 'Resolve Map', true);
-    }
-    if (isDev && localResolveMap) {
-      applyResolves(localResolveMap, localResolvePackagePath, 'Local Resolve Map');
-    }
+    processPackages(localPackages, 'Local Packages Map');
 
     resolve = {
       'modules': modulePackages,
-      'alias': aliasToLocalPathMap,
+      'alias': packageToEntryFileMap,
       //'symlinks': false
     };
     resolveLoader = {
@@ -147,21 +130,11 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
 
   let loaderSrcPaths = (Array.isArray(srcPaths) ? srcPaths : [srcPaths]).map(srcPath => path.resolve(basePath, srcPath));
 
-  cssPaths = css ? srcPaths : false;
   let loaderCssPaths = css ? loaderSrcPaths : null;
-  let resolvedLoaderCssPaths = null;
-  if (resolveEnabled && typeToLocalPathsMaps['css'] !== void 0) {
-    resolvedLoaderCssPaths = typeToLocalPathsMaps['css'];
-  }
 
-  sassPaths = sass ? srcPaths : false;
   let loaderSassPaths = sass ? loaderSrcPaths : null;
-  let resolvedLoaderSassPaths = null;
-  if (resolveEnabled && typeToLocalPathsMaps['sass'] !== void 0) {
-    resolvedLoaderSassPaths = typeToLocalPathsMaps['sass'];
-  }
 
-  if (loaderSassPaths || resolvedLoaderSassPaths) {
+  if (loaderSassPaths) {
     if (!isSassInstalled()) {
       logger.error('Sass needs to be installed to process scss files!');
       process.exit(1);
@@ -318,7 +291,68 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     );
 
     if (htmlDeploy) {
-      plugins.push(new HtmlWebpackDeployPlugin(htmlDeploy));
+      let deployOptions = htmlDeploy;
+      if (hasLocalPackages) {
+        let { packages, ...otherOptions } = deployOptions;
+        if (packages) {
+          packages = { ...packages };
+          for (let packageName of Object.keys(localPackages)) {
+            let deployPackage = packages[packageName];
+            if (deployPackage !== void 0) {
+              deployPackage = { ...deployPackage };
+              let { rootPath, copy, links, scripts } = localPackages[packageName];
+              if (copy !== void 0) {
+                if (Array.isArray(copy)) {
+                  copy = copy.map(copyItem => ({ ...copyItem, fromAbsolute: true, from: path.join(basePath, rootPath, copyItem.from) }));
+                }
+                else {
+                  copy = { ...copy, fromAbsolute: true, from: path.join(basePath, rootPath, copy.from) };
+                }
+                deployPackage.copy = copy;
+              }
+              const processTagGlob = tag => {
+                if (typeof tag === 'object') {
+                  if (tag.globPath !== void 0) {
+                    return {
+                      ...tag,
+                      path: tag.path !== void 0 ? tag.path : '',
+                      globPath: path.join(basePath, rootPath, tag.globPath)
+                    };
+                  }
+                  else {
+                    return tag;
+                  }
+                }
+                else {
+                  return tag;
+                }
+              }
+              if (links !== void 0) {
+                if (Array.isArray(links)) {
+                  deployPackage.links = links.map(processTagGlob);
+                }
+                else {
+                  deployPackage.links = processTagGlob(links);
+                }
+              }
+              if (scripts !== void 0) {
+                if (Array.isArray(scripts)) {
+                  deployPackage.scripts = scripts.map(processTagGlob);
+                }
+                else {
+                  deployPackage.scripts = processTagGlob(scripts);
+                }
+              }
+              packages[packageName] = deployPackage;
+            }
+          }
+          deployOptions = {
+            ...otherOptions,
+            packages
+          };
+        }
+      }
+      plugins.push(new HtmlWebpackDeployPlugin(deployOptions));
     }
   }
 
@@ -416,12 +450,12 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     }
   );
 
-  const resolvedAliases = Object.keys(aliasToJSPathMap);
-  for (let resolvedAlias of resolvedAliases) {
-    let resolvedLoaderSrcPath = aliasToJSPathMap[resolvedAlias];
-    let resolvedPorterConfigPath = aliasToPorterConfigMap[resolvedAlias];
-    if (resolvedPorterConfigPath !== void 0) {
-      const localPorterConfig = require(resolvedPorterConfigPath);
+  const packageNames = Object.keys(packageToSrcPathMap);
+  for (let packageName of packageNames) {
+    let packageSrcPath = packageToSrcPathMap[packageName];
+    let packageConfigFile = packageToConfigFileMap[packageName];
+    if (packageConfigFile !== void 0) {
+      const localPorterConfig = require(packageConfigFile);
       const { babel: localBabel } = localPorterConfig;
       const { targets: localTargets, options: localOptions } = localBabel;
       const localBabelConfig = createBabelConfig({ targets: localTargets, options: localOptions, mode, modules: false });
@@ -435,19 +469,19 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
             presets: localBabelConfig.presets,
             plugins: localBabelConfig.plugins
           },
-          include: resolvedLoaderSrcPath
+          include: packageSrcPath
         }
       );
     }
     else {
       let query = {
-        babelrcRoots: resolvedLoaderSrcPath,
+        babelrcRoots: packageSrcPath,
         cacheDirectory: babelCacheDirectory
       };
-      let include = resolvedLoaderSrcPath;
+      let include = packageSrcPath;
 
-      const localResolve = localResolveMap.js[resolvedAlias];
-      if (localResolve && !localResolve.srcPath) {
+      const localPackage = localPackages[packageName];
+      if (localPackage && !localPackage.srcPath) {
         // This is a local resolve for a node_module package
         // The thinking was this might be useable to fix the fact that react-redux uses global state
         // The attempt was to make react-redux locally resolve to node_modules to be shared by subsequent local resolves resolving the conflicts
@@ -460,7 +494,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
           babelrc: false,
           cacheDirectory: babelCacheDirectory
         };
-        include = path.join(basePath, resolvedLoaderSrcPath);
+        include = path.join(basePath, packageSrcPath);
       }
       rules.push(
         {
@@ -472,22 +506,22 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       );
     }
   }
-  if (loaderCssPaths || loaderSassPaths || resolvedLoaderCssPaths || resolvedLoaderSassPaths) {
-    const cssPaths = (loaderCssPaths || []).concat(resolvedLoaderCssPaths || []);
-    if (cssPaths.length > 0) {
-      rules.push(
-        {
-          test: /\.css$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            "css-loader"
-          ],
-          include: cssPaths
-        }
-      );
+  if (loaderCssPaths || loaderSassPaths) {
+    if (loaderCssPaths && loaderCssPaths.length > 0) {
+      loaderCssPaths.forEach(cssPath => {
+        rules.push(
+          {
+            test: /\.css$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              "css-loader"
+            ],
+            include: cssPath
+          }
+        );
+      });
     }
-    const sassPaths = (loaderSassPaths || []).concat(resolvedLoaderSassPaths || []);
-    if (sassPaths.length > 0) {
+    if (loaderSassPaths && loaderSassPaths.length > 0) {
       rules.push(
         {
           test: /\.scss$/,
@@ -496,7 +530,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
             "raw-loader",
             "sass-loader"
           ],
-          include: sassPaths
+          include: loaderSassPaths
         }
       );
     }
@@ -529,7 +563,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   //   config.externals = externals;
   // }
   let extraConfig = {};
-  if (resolveEnabled) {
+  if (hasLocalPackages) {
     if (isDev && reactHotLoader) {
       resolve.alias['react-dom'] = '@hot-loader/react-dom';
     }
