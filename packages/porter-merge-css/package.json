@@ -26,7 +26,7 @@
     "@porterjs/config": "^1.0.0",
     "@porterjs/logger": "^1.0.0",
     "concat": "^1.0.3",
-    "glob": "^7.1.3",
+    "glob": "^7.1.4",
     "mkdirp": "^0.5.1"
   }
 }

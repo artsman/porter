@@ -24,12 +24,12 @@
     "porter-webpack-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.4.4",
+    "@babel/core": "^7.4.5",
     "@babel/polyfill": "^7.4.4",
     "@porterjs/babel-config": "^1.0.14",
     "@porterjs/config": "^1.0.0",
     "@porterjs/logger": "^1.0.0",
-    "babel-loader": "^8.0.5",
+    "babel-loader": "^8.0.6",
     "css-loader": "^2.1.1",
     "exports-loader": "^0.7.0",
     "expose-loader": "^0.7.5",
@@ -46,9 +46,9 @@
     "serviceworker-webpack-dev-plugin": "^1.0.4",
     "split-chunk-loader": "^1.0.1",
     "style-loader": "^0.23.1",
-    "terser-webpack-plugin": "^1.2.3",
+    "terser-webpack-plugin": "^1.3.0",
     "url-loader": "^1.1.2",
-    "webpack": "^4.30.0",
+    "webpack": "^4.32.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-sentry-plugin": "^2.0.0",
     "whatwg-fetch": "^3.0.0"
