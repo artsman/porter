@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/lib",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "porter lib package",
   "repository": {
     "type": "git",
@@ -17,9 +17,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@porterjs/babel": "^1.0.18",
+    "@porterjs/babel": "^1.0.19",
     "@porterjs/merge-css": "^1.0.18",
-    "@porterjs/rollup": "^1.0.18",
+    "@porterjs/rollup": "^1.0.19",
     "@porterjs/version": "^1.0.18"
   }
 }
