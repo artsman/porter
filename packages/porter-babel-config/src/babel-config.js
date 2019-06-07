@@ -3,7 +3,7 @@ const porterBabelPluginMap = {
   classProperties: "@babel/plugin-proposal-class-properties",
   objectRestSpread: "@babel/plugin-proposal-object-rest-spread",
   reactJsx: "@babel/plugin-transform-react-jsx",
-  forOfAsArray: "babel-plugin-transform-for-of-as-array"
+  forOfAsArray: ["@babel/plugin-transform-for-of", { "assumeArray": true }]
 };
 
 const porterBabelPluginFunctionMap = {};
@@ -94,7 +94,8 @@ module.exports = function createBabelConfig({ targets, options, mode, modules, p
       ["@babel/preset-env", {
         "useBuiltIns": false,
         "modules": modules === true ? "commonjs" : modules,
-        "targets": targets
+        "targets": targets,
+        "exclude": (options && options.forOfAsArray) ? ["transform-for-of"] : []
       }]
     ].concat(presets);
   }
