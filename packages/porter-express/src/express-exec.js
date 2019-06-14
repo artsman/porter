@@ -163,6 +163,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
    * openBrowser - A boolean flag that when true will cause a browser window to open to the server host after the server is started
    * compress - A boolean flag that when true will enable compression of all responses from the server
    * staticMap - a map of server request paths to relative file paths to be served statically by the server (syntax ex: { "/static/": "/filePath"})
+   * staticQueryMap - a map of server request paths to query param matchers and relative file paths to be served dynamically by the server (syntax ex: { "/staticQuery/": [{ matcher: query => query === 'a', file: "/fileA"}, { matcher: query => query === 'b', file: "/fileB"}])
    * proxy - the configuration for the server's proxying capabilities
    *   proxyHost - The host to proxy requests to
    *   proxyHttpPaths - The list of http/https paths to proxy to the proxyHost
@@ -172,7 +173,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
    *   proxyHeaderKeysExtra - An array of strings that when not undefined will be added to the headers that get proxied to/from the proxyHost
    */
   const {
-    productName, host, port, secure, openBrowser, compress, staticMap, proxy
+    productName, host, port, secure, openBrowser, compress, staticMap, staticQueryMap, proxy
   } = expressConfig;
 
   if (compress) {
@@ -183,7 +184,25 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
     for (let staticPath in staticMap) {
       app.use(staticPath, express.static(path.join(basePath, staticMap[staticPath])));
     }
+  }
 
+  if (staticQueryMap) {
+    for (let staticQueryPath in staticQueryMap) {
+      let matcherDefs = staticQueryMap[staticQueryPath];
+      app.use(staticQueryPath, function (req, res) {
+        const { query } = req;
+        const matcherDef = matcherDefs.find(matcherDef => matcherDef.matcher(query));
+        if (matcherDef) {
+          res.sendFile(path.join(basePath, matcherDef.file));
+        }
+        else {
+          res.status(404).send('File Not Found For Query');
+        }
+      });
+    }
+  }
+
+  if (staticMap) {
     for (let staticPath in staticMap) {
       // Make sure we generate 404 responses for any unfound static assets
       app.use(staticPath, function (req, res) {
