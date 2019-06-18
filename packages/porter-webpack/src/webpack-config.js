@@ -42,7 +42,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     srcPaths, css, sass, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
     defineMap, noParse, noopRegexps,
-    localPackages,
+    localPackages, sourceMap = true,
     minify, hotModuleReplacement, reactHotLoader,
     reportFilename, sentry, sentryUpload, serviceWorker
   } = webpack;
@@ -210,7 +210,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
         new TerserPlugin({
           cache: true,
           parallel: true,
-          sourceMap: true
+          sourceMap
         }),
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {

@@ -13,7 +13,7 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
   const { babel, rollup } = porterConfig;
   const { targets, options, presets, plugins } = babel;
   const babelConfig = createBabelConfig({ targets, options, mode: 'production', modules: false, presets, plugins });
-  const { inputFile, umdOutputFile, minOutputFile, name, licenseFile, globalPackages, externalPackages } = rollup;
+  const { inputFile, umdOutputFile, minOutputFile, name, licenseFile, globalPackages, externalPackages, sourceMap = true } = rollup;
   const outputFile = minify ? minOutputFile : umdOutputFile;
 
   let config = {
@@ -35,7 +35,7 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
       name: name,
       format: 'umd',
       file: outputFile,
-      sourcemap: true,
+      sourcemap: sourceMap,
       globals: globalPackages
     },
   };
@@ -51,7 +51,7 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
   if (licenseFile !== false) {
     config.plugins.push(
       license({
-        sourceMap: true,
+        sourceMap: sourceMap,
         banner: {
           file: path.join(basePath, licenseFile),
           encoding: 'utf-8', // Default is utf-8
