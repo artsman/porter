@@ -22,11 +22,11 @@
     "porter-mocha": "src/bin/mocha.js"
   },
   "dependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/register": "^7.4.4",
+    "@babel/core": "^7.5.5",
+    "@babel/register": "^7.5.5",
     "@porterjs/babel-config": "^1.0.19",
     "@porterjs/config": "^1.0.0",
     "@porterjs/logger": "^1.0.0",
-    "mocha": "^6.1.4"
+    "mocha": "^6.2.0"
   }
 }
