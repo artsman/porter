@@ -1,16 +1,15 @@
-const eslintCLI = require('eslint/lib/cli');
+const path = require('path');
+
 const { CLIEngine } = require('eslint/lib/cli-engine');
 const options = require('eslint/lib/options');
 
 module.exports = function eslintExec({ config, logger }) {
   const { files, ...otherConfig } = config;
 
-  // eslintCLI.execute(files);
-
   let currentOptions;
 
   try {
-    currentOptions = { ...options.parse([]), ...otherConfig };
+    currentOptions = { ...options.parse([]), ...{ configFile: path.join(__dirname, 'eslint-config.js') } };
   } catch (error) {
     logger.error(error.message);
     process.exit(2);
