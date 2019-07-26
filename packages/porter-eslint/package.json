@@ -1,0 +1,27 @@
+{
+  "name": "@porterjs/eslint",
+  "version": "1.0.0",
+  "description": "porter eslint package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "eslint"
+  ],
+  "files": [
+    "src"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "porter-eslint": "src/bin/eslint.js"
+  },
+  "dependencies": {
+    "eslint": "^6.1.0"
+  }
+}
