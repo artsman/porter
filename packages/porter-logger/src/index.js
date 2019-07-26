@@ -2,6 +2,9 @@ const logger = {
   log: function(...args) {
     console.log(...args);
   },
+  info: function (...args) {
+    console.info(...args);
+  },
   warn: function (...args) {
     console.warn(...args);
   },
@@ -12,6 +15,7 @@ const logger = {
 
 const noLogger = {
   log: function() {},
+  info: function () { },
   warn: function (...args) {
     console.warn(...args);
   },
