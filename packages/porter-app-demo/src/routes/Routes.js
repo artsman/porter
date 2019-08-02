@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Router } from 'react-router';
-import { SplitRoutes } from '@artsman/react-router-split-routes';
+import { SplitRoutes } from 'react-router-split-routes';
 
 const SplitLoading = () => (
   <div>Loading...</div>
