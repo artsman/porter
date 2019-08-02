@@ -21,6 +21,7 @@ module.exports = {
     }
   },
   webpack: {
+    useEslint: true,
     srcPaths: [
       "src"
     ],
@@ -126,6 +127,37 @@ module.exports = {
       filenameTransform: filename => `~/static/reveal/${filename}`
     },
     sentryUpload: false
+  },
+  eslint: {
+    rules: {
+      "semi": ["error", "always"],
+      //   // "quotes": ["error", "double"]
+    },
+    plugins: ["import", "react"],
+    extends: [
+      "eslint:recommended",
+      "plugin:import/errors",
+      "plugin:react/recommended"
+    ],
+    settings: {
+      "react": {
+        "version": "16"
+      }
+    },
+    // TODO - change back to "babel-eslint" once https://github.com/babel/babel-eslint/pull/784 is released
+    parser: "babel-eslint-fork",
+    parserOptions: {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    env: {
+      "browser": true,
+      // "node": true
+    },
+    files: 'src'
   },
   express: {
     productName: productName,
