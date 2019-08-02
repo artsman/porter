@@ -23,6 +23,9 @@
   },
   "main" : "src/eslint-config.js",
   "dependencies": {
+    "@porterjs/babel-config": "^1.0.19",
+    "@porterjs/config": "^1.0.0",
+    "@porterjs/logger": "^1.0.0",
     "babel-eslint-fork": "^v11.0.0-beta.1",
     "eslint": "^6.1.0",
     "eslint-plugin-import": "^2.18.2",
