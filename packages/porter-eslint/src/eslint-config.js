@@ -1,25 +1,10 @@
 const loadPorterConfig = require("@porterjs/config");
-const createBabelConfig = require("@porterjs/babel-config");
+const createEslintConfig = require("@porterjs/eslint-config");
 
 const porterConfig = loadPorterConfig(process.cwd(), process.argv);
-const { eslint, babel } = porterConfig;
 
-const { files, ...otherConfig } = eslint;
+const eslintConfig = createEslintConfig(porterConfig);
 
-const { parserOptions, ...otherOptions } = otherConfig;
+// eslintConfig.parserOptions.requireConfigFile = false;
 
-const { targets, options, presets, plugins } = babel;
-
-const babelConfig = createBabelConfig({ targets, options, mode: 'test', modules: true, presets, plugins });
-
-module.exports = {
-  ...otherOptions,
-  parserOptions: {
-    ...parserOptions,
-    requireConfigFile: false,
-    babelOptions: {
-      babelrc: false,
-      ...babelConfig
-    }
-  }
-};
+module.exports = eslintConfig;
