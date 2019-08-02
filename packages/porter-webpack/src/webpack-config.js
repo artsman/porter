@@ -35,13 +35,13 @@ function isSassInstalled() {
 module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = false, logger = console }) {
   const mode = isDev ? 'development' : 'production';
 
-  const { babel, webpack } = porterConfig;
+  const { babel, eslint, webpack } = porterConfig;
   const { targets, options } = babel;
 
   const {
     srcPaths, css, sass, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
-    defineMap, noParse, noopRegexps,
+    defineMap, noParse, noopRegexps, useEslint,
     localPackages, sourceMap = true,
     minify, hotModuleReplacement, reactHotLoader,
     reportFilename, sentry, sentryUpload, serviceWorker
@@ -436,6 +436,19 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   }
 
   let rules = [];
+  if (eslint && useEslint) {
+    rules.push(
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        options: {
+          configFile: path.join(__dirname, 'webpack-eslint-config.js')
+        },
+        include: loaderSrcPaths
+      }
+    );
+  }
   rules.push(
     {
       test: /\.js$/,
