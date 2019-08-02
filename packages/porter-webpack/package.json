@@ -50,7 +50,7 @@
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.4.1",
     "url-loader": "^2.1.0",
-    "webpack": "^4.39.0",
+    "webpack": "^4.39.1",
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-sentry-plugin": "^2.0.2",
     "whatwg-fetch": "^3.0.0"
