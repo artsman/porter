@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/eslint",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "porter eslint package",
   "repository": {
     "type": "git",
