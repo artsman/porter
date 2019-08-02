@@ -14,8 +14,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "porter-webpack -L -F {\\\"webpack\\\":{\\\"a\\\":true}}",
-    "start": "porter-webpack-express -L -F {\\\"webpack\\\":{\\\"a\\\":true}}",
+    "deploy": "porter-webpack -L -F {\\\"webpack\\\":{\\\"a\\\":true}}",
+    "deploy-run": "porter-webpack-express -L -F {\\\"webpack\\\":{\\\"a\\\":true}}",
     "dev": "porter-webpack-express-dev -L -F {\\\"webpack\\\":{\\\"a\\\":true}}",
     "clean": "porter-webpack-clean -L"
   },
