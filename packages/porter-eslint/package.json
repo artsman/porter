@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/eslint",
-  "version": "1.0.0",
+  "version": "1.0.22",
   "description": "porter eslint package",
   "repository": {
     "type": "git",
@@ -21,11 +21,11 @@
   "bin": {
     "porter-eslint": "src/bin/eslint.js"
   },
-  "main" : "src/eslint-config.js",
+  "main": "src/eslint-config.js",
   "dependencies": {
-    "@porterjs/config": "^1.0.0",
-    "@porterjs/eslint-config": "^1.0.0",
-    "@porterjs/logger": "^1.0.0",
+    "@porterjs/config": "^1.0.22",
+    "@porterjs/eslint-config": "^1.0.22",
+    "@porterjs/logger": "^1.0.22",
     "eslint": "^6.1.0"
   }
 }

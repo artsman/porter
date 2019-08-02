@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/logger",
-  "version": "1.0.0",
+  "version": "1.0.22",
   "description": "porter logger package",
   "repository": {
     "type": "git",

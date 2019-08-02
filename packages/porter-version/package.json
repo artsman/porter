@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/version",
-  "version": "1.0.18",
+  "version": "1.0.22",
   "description": "porter version package",
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
     "porter-version-update": "src/bin/version-update.js"
   },
   "dependencies": {
-    "@porterjs/config": "^1.0.0",
-    "@porterjs/logger": "^1.0.0",
+    "@porterjs/config": "^1.0.22",
+    "@porterjs/logger": "^1.0.22",
     "replace-in-file": "^4.1.1"
   }
 }
