@@ -3,13 +3,17 @@ const path = require('path');
 const { CLIEngine } = require('eslint/lib/cli-engine');
 const options = require('eslint/lib/options');
 
-module.exports = function eslintExec({ config, logger }) {
+module.exports = function eslintExec({ config, logger, fix = false }) {
   const { files, ...otherConfig } = config;
 
   let currentOptions;
 
   try {
-    currentOptions = { ...options.parse([]), ...{ configFile: path.join(__dirname, 'eslint-config.js') } };
+    currentOptions = {
+      ...options.parse([]),
+      fix,
+      configFile: path.join(__dirname, 'eslint-config.js')
+    };
   } catch (error) {
     logger.error(error.message);
     process.exit(2);
@@ -17,6 +21,11 @@ module.exports = function eslintExec({ config, logger }) {
 
   const engine = new CLIEngine(currentOptions);
   const report = engine.executeOnFiles(files);
+
+  if (fix) {
+    logger.info("Fix mode enabled - applying fixes");
+    CLIEngine.outputFixes(report);
+  }
 
   if (printResults(engine, report.results, currentOptions.format, logger)) {
     const tooManyWarnings = currentOptions.maxWarnings >= 0 && report.warningCount > currentOptions.maxWarnings;

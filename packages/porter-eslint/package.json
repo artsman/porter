@@ -19,7 +19,8 @@
     "access": "public"
   },
   "bin": {
-    "porter-eslint": "src/bin/eslint.js"
+    "porter-eslint": "src/bin/eslint.js",
+    "porter-eslint-fix": "src/bin/eslint-fix.js"
   },
   "main": "src/eslint-config.js",
   "dependencies": {
