@@ -17,6 +17,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@porterjs/eslint": "^1.0.22",
     "@porterjs/webpack": "^1.0.22",
     "@porterjs/webpack-express": "^1.0.22",
     "@porterjs/webpack-express-dev": "^1.0.22"
