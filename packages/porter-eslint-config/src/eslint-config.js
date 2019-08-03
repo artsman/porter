@@ -1,7 +1,7 @@
 const createBabelConfig = require('@porterjs/babel-config');
 
 module.exports = function createEslintConfig(porterConfig) {
-  const { eslint, babel, webpack } = porterConfig;
+  const { eslint, babel, webpack, rollup } = porterConfig;
   const { files, useBabel = true, globals, ...otherConfig } = eslint;
 
   let overrideGlobals = globals;
@@ -17,6 +17,19 @@ module.exports = function createEslintConfig(porterConfig) {
     }
     for (let globalPackageKey of Object.keys(globalPackageMap)) {
       overrideGlobals[globalPackageKey] = true;
+    }
+  }
+
+  if (rollup) {
+    const { globalPackages } = rollup;
+    if (globalPackages) {
+      overrideGlobals = {
+        ...overrideGlobals
+      };
+      for (let globalPackageKey of Object.keys(globalPackages)) {
+        // for rollup, the globals are the values instead of the key...
+        overrideGlobals[globalPackages[globalPackageKey]] = true;
+      }
     }
   }
 
