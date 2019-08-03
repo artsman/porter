@@ -130,10 +130,12 @@ module.exports = {
   },
   eslint: {
     rules: {
-      "semi": ["error", "always"],
-      //   // "quotes": ["error", "double"]
+      "semi": ["error", "always"]
     },
-    plugins: ["import", "react"],
+    plugins: [
+      "import",
+      "react"
+    ],
     extends: [
       "eslint:recommended",
       "plugin:import/errors",
@@ -142,15 +144,6 @@ module.exports = {
     settings: {
       "react": {
         "version": "16"
-      }
-    },
-    // TODO - change back to "babel-eslint" once https://github.com/babel/babel-eslint/pull/784 is released
-    parser: "babel-eslint-fork",
-    parserOptions: {
-      "ecmaVersion": 6,
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true
       }
     },
     env: {
