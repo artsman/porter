@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/eslint-config",
-  "version": "1.0.22",
+  "version": "1.0.24",
   "description": "porter eslint config package",
   "repository": {
     "type": "git",
