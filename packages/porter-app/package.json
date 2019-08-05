@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/app",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "porter app package",
   "repository": {
     "type": "git",
@@ -17,9 +17,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@porterjs/eslint": "^1.0.24",
-    "@porterjs/webpack": "^1.0.24",
-    "@porterjs/webpack-express": "^1.0.24",
-    "@porterjs/webpack-express-dev": "^1.0.24"
+    "@porterjs/eslint": "^1.0.25",
+    "@porterjs/webpack": "^1.0.25",
+    "@porterjs/webpack-express": "^1.0.25",
+    "@porterjs/webpack-express-dev": "^1.0.25"
   }
 }
