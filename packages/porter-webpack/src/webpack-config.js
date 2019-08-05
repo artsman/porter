@@ -53,14 +53,14 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const bundleNameCSS = bundleName + '.css';
   const hasLocalPackages = (isDev && localPackages);
 
-  let resolve, resolveLoader;
+  let resolve;
   let packageToSrcPathMap = {};
   let packageToConfigFileMap = {};
 
   if (hasLocalPackages) {
     let packageToEntryFileMap = {};
 
-    const modulePackages = ['node_modules', basePath];
+    const modulePackages = [path.join(basePath, 'node_modules'), 'node_modules'];
 
     function processPackages(packageMap, description, exitOnError = true) {
       let stats, foundSrcPath, foundEntryFile, foundConfigFile, allFound = true;
@@ -123,9 +123,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       'alias': packageToEntryFileMap,
       //'symlinks': false
     };
-    resolveLoader = {
-      'modules': modulePackages
-    }
   }
 
   let loaderSrcPaths = (Array.isArray(srcPaths) ? srcPaths : [srcPaths]).map(srcPath => path.resolve(basePath, srcPath));
@@ -581,8 +578,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       resolve.alias['react-dom'] = '@hot-loader/react-dom';
     }
     extraConfig = {
-      resolve,
-      resolveLoader
+      resolve
     };
   }
   else if (isDev && reactHotLoader) {
