@@ -1,0 +1,23 @@
+{
+  "name": "@porterjs/mocha-demo",
+  "version": "1.0.24",
+  "description": "porter mocha demo package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "mocha"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "porter-mocha",
+    "mocha": "mocha -r @porterjs/babel-register test"
+  },
+  "dependencies": {
+    "@porterjs/mocha": "^1.0.22"
+  }
+}

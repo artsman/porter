@@ -1,7 +1,6 @@
 const Mocha = require('mocha');
-const babelRegister = require('@babel/register');
-const loadPorterConfig = require("@porterjs/config");
-const createBabelConfig = require("@porterjs/babel-config");
+
+const porterRegister = require('@porterjs/babel-register');
 
 /**
  * Exits Mocha when tests + code under test has finished execution (default)
@@ -46,22 +45,11 @@ const doExit = code => {
   done();
 };
 
-const porterConfig = loadPorterConfig(process.cwd(), process.argv);
-
-const { babel } = porterConfig;
-const { targets, options, presets, plugins } = babel;
-
-const babelConfig = createBabelConfig({ targets, options, mode: 'test', modules: true, presets, plugins });
-
 module.exports = function mochaExec({ mochaConfig, logger = console }) {
 
   const { files, exit, extensions } = mochaConfig;
 
-  babelRegister({
-    babelrc: false,
-    presets: babelConfig.presets,
-    plugins: babelConfig.plugins
-  });
+  // porterRegister({ mode: "test", modules: true, logger  });
 
   const mocha = new Mocha();
   mocha.files = files.reduce((files, file) => {
