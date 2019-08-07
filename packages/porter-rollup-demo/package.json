@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/rollup-demo",
-  "version": "1.0.24",
+  "version": "1.0.27",
   "description": "porter rollup demo package",
   "repository": {
     "type": "git",
@@ -18,6 +18,6 @@
     "clean": "porter-rollup-clean"
   },
   "dependencies": {
-    "@porterjs/rollup": "^1.0.24"
+    "@porterjs/rollup": "^1.0.27"
   }
 }
