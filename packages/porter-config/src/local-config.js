@@ -35,7 +35,7 @@ function mergeConfigs(baseConfig, config) {
   return mergedConfig;
 }
 
-module.exports = function applyLocalAndForcedPorterConfig(porterConfig, basePath, forcedConfigString, logLines) {
+module.exports = function applyLocalAndForcedPorterConfig(porterConfig, basePath, forcedConfigString, logger) {
   let mergedConfig = porterConfig;
 
   let { localConfigFile } = porterConfig;
@@ -48,12 +48,12 @@ module.exports = function applyLocalAndForcedPorterConfig(porterConfig, basePath
       forcedConfig = JSON.parse(forcedConfigString);
     }
     catch (e) {
-      console.error('failed to parse forced porter config:\n ' + e + '\n\n' + forcedConfigString);
+      logger.error('failed to parse forced porter config:\n ' + e + '\n\n' + forcedConfigString);
     }
   }
 
   if (forcedConfig && forcedConfig.localConfigFile !== void 0) {
-    logLines.push('applying local porter config from forced porter config');
+    logger.log('applying local porter config from forced porter config');
     localConfigFile = forcedConfig.localConfigFile;
   }
   if (localConfigFile) {
@@ -63,20 +63,27 @@ module.exports = function applyLocalAndForcedPorterConfig(porterConfig, basePath
         localConfig = require(localConfigPath);
       }
       catch (e) {
-        console.error('failed to load local porter config from ' + localConfigFile + '\n', e);
+        logger.error('failed to load local porter config from ' + localConfigFile + '\n', e);
       }
     }
     else {
-      console.warn('local porter config file did not exist: ' + localConfigFile);
+      logger.warn('local porter config file did not exist: ' + localConfigFile);
     }
   }
   if (localConfig) {
-    mergedConfig = mergeConfigs(mergedConfig, localConfig);
-    logLines.push('applied local porter config from ' + localConfigFile + '\n----\n' + configToString(localConfig) + '\n----\n');
+    if (typeof localConfig === "function") {
+      mergedConfig = localConfig(mergedConfig);
+    }
+    else {
+      mergedConfig = mergeConfigs(mergedConfig, localConfig);
+    }
+    logger.log("applied local porter config from " + localConfigFile);
+    logger.debug('local porter config:\n----\n' + configToString(localConfig) + '\n----\n');
   }
   if (forcedConfig) {
     mergedConfig = mergeConfigs(mergedConfig, forcedConfig);
-    logLines.push('applied forced porter config' + '\n----\n' + configToString(forcedConfig) + '\n----\n');
+    logger.log("applied forced porter config");
+    logger.debug('forced porter config:\n----\n' + configToString(forcedConfig) + '\n----\n');
   }
 
   return mergedConfig;

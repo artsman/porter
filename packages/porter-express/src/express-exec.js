@@ -81,7 +81,7 @@ function addProxyMiddleware(app, proxyConfig) {
   }
 }
 
-function addProxySocket(expressServer, proxyConfig) {
+function addProxySocket(expressServer, proxyConfig, logger) {
   const {
     proxyHost, proxySocketPath, proxySocketHandshakeQueryKeys
   } = proxyConfig;
@@ -115,7 +115,7 @@ function addProxySocket(expressServer, proxyConfig) {
             }
           }
           else {
-            console.error('Could not find socket handshake query options!');
+            logger.error('Could not find socket handshake query options!');
             process.exit(1);
           }
         }
@@ -229,14 +229,14 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
   }
 
   if (proxy) {
-    addProxySocket(expressServer, proxy);
+    addProxySocket(expressServer, proxy, logger);
   }
 
   let theServer;
 
   function startServerCallback(error) {
     if (error) {
-      console.error(error);
+      logger.error(error);
     } else {
       theServer.keepAliveTimeout = 0; // FIX for Node 8 issue: https://github.com/glenjamin/webpack-hot-middleware/issues/210
       logger.log(`===> ${productName} on port ${port} in ${mode} mode. ${openBrowser ? 'Opening' : 'Open up'} ${secure ? 'https://' : 'http://'}${host}:${port}/ in your browser.`);

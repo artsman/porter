@@ -146,7 +146,7 @@ async function write(src, base, outputPath, extensions, sourceMaps, babelConfig,
     outputFileSync(dest, res.code);
     chmod(src, dest);
 
-    logger.log(src + " -> " + dest);
+    logger.info(src + " -> " + dest);
 
     return true;
   } catch (err) {

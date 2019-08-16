@@ -4,7 +4,7 @@ const rimraf = require('rimraf');
 const path = require('path');
 
 const loadPorterConfig = require("@porterjs/config");
-const porterLogger = require("@porterjs/logger");
+const { porterLogger } = require("@porterjs/logger");
 
 const basePath = process.cwd();
 

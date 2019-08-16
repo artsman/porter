@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const loadPorterConfig = require("@porterjs/config");
-const porterLogger = require("@porterjs/logger");
+const { porterLogger } = require("@porterjs/logger");
 
 const jestExec = require('../jest-exec');
 

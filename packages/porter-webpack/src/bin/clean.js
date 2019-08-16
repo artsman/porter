@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 const loadPorterConfig = require("@porterjs/config");
-const porterLogger = require("@porterjs/logger");
+const { porterLogger } = require("@porterjs/logger");
 
 const basePath = process.cwd();
 

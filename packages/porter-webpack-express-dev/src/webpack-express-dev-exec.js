@@ -12,27 +12,23 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
   const { express: expressConfig, webpack } = porterConfig;
   const { publicPath, reroutes } = webpack;
 
+  const middlewareLogger = {
+    trace: webpackLogger.debug,
+    debug: webpackLogger.debug,
+    info: webpackLogger.info,
+    warn: webpackLogger.warn,
+    error: webpackLogger.error
+  };
+
   function addMiddleware(app) {
     let compiler = Webpack(webpackConfig);
-    const loggerLogWrapper = (...args) => webpackLogger.log(...args);
-    const loggerWarnWrapper = (...args) => webpackLogger.warn(...args);
-    const loggerErrorWrapper = (...args) => webpackLogger.error(...args);
-    let middleware = webpackDevMiddleware(
-      compiler,
-      {
-        stats: 'errors-only',
-        noInfo: true,
-        publicPath: publicPath,
-        index: webpack.html ? webpack.html.indexFilename : false,
-        logger: {
-          trace: loggerLogWrapper,
-          debug: loggerLogWrapper,
-          info: loggerLogWrapper,
-          warn: loggerWarnWrapper,
-          error: loggerErrorWrapper
-        }
-      }
-    );
+    let middleware = webpackDevMiddleware(compiler, {
+      stats: "errors-only",
+      noInfo: true,
+      publicPath: publicPath,
+      index: webpack.html ? webpack.html.indexFilename : false,
+      logger: middlewareLogger
+    });
 
     if (reroutes) {
       for (let reroute of Object.keys(reroutes)) {

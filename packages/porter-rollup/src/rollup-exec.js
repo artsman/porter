@@ -14,13 +14,13 @@ module.exports = function rollupExec({ rollupConfig, logger = console }) {
           logger.log(`created ${rollupConfig.output.file} in ${ms(Date.now() - start)}`);
         },
         error => {
-          console.error(error);
+          logger.error(error);
           process.exit(1);
         }
       );
     },
     error => {
-      console.error(error);
+      logger.error(error);
       process.exit(1);
     }
   );

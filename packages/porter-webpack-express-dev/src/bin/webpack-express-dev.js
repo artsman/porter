@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const loadPorterConfig = require("@porterjs/config");
-const porterLogger = require("@porterjs/logger");
+const { porterLogger } = require("@porterjs/logger");
 const startWebpackExpressServer = require('../webpack-express-dev-exec');
 
 const basePath = process.cwd();

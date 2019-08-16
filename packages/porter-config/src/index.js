@@ -1,6 +1,6 @@
 const path = require("path");
 
-const porterLogger = require("@porterjs/logger");
+const { porterLogger, memoryLogger } = require("@porterjs/logger");
 
 const applyLocalAndForcedPorterConfig = require('./local-config');
 const configToString = require('./config-to-string');
@@ -12,8 +12,9 @@ module.exports = function loadPorterConfig(basePath, args) {
   let forcedConfig;
   let hasForcedArg = false;
   let configFile = './porter';
-  let forceLog = false;
-  let logLines = [];
+  let silent = false;
+
+  let logger = porterLogger({ silent }, 'config');
 
   args.slice(2).forEach(function (arg) {
     if (hasConfigArg) {
@@ -30,8 +31,8 @@ module.exports = function loadPorterConfig(basePath, args) {
     else if (arg === '--force' || arg === '-F') {
       hasForcedArg = true;
     }
-    else if (arg === '--log' || arg === '-L') {
-      forceLog = true;
+    else if (arg === '--silent' || arg === '-S') {
+      silent = true;
     }
   });
 
@@ -40,31 +41,30 @@ module.exports = function loadPorterConfig(basePath, args) {
     basePorterConfig = porterConfig = require(porterConfigFile);
   }
   catch (e) {
-    console.error('failed to load porter config from ' + configFile + '\n', e);
+    logger.error('failed to load porter config from ' + configFile + '\n', e);
     porterConfig = null;
   }
-  let logger = null;
+  const localLogger = memoryLogger();
   if (porterConfig) {
-    logLines.push('loaded porter config from ' + configFile + '\n----\n' + configToString(porterConfig) + '\n----\n');
-    porterConfig.forceLog = forceLog;
-    logger = porterLogger(porterConfig);
+    if (silent) {
+      porterConfig.silent = silent;
+    }
+    logger = porterLogger(porterConfig, "config");
+    logger.log('loaded porter config from ' + configFile);
+    logger.debug('loaded porter config:\n----\n' + configToString(porterConfig) + '\n----\n');
     try {
-      porterConfig = applyLocalAndForcedPorterConfig(porterConfig, basePath, forcedConfig, logLines);
+      porterConfig = applyLocalAndForcedPorterConfig(porterConfig, basePath, forcedConfig, localLogger);
     }
     catch (e) {
-      console.error('error applying local and forced porter config: \n', e);
+      logger.error('error applying local and forced porter config: \n', e);
       porterConfig = null;
     }
   }
   if (porterConfig) {
-    logger = porterLogger(porterConfig);
+    logger = porterLogger(porterConfig, 'config', true);
+    localLogger.logTo(logger);
     if (basePorterConfig !== porterConfig) {
-      logLines.push('using porter config ' + '\n----\n' + configToString(porterConfig) + '\n----\n');
-    }
-  }
-  if (logger) {
-    for (let logLine of logLines) {
-      logger.log(logLine);
+      logger.debug('using porter config ' + '\n----\n' + configToString(porterConfig) + '\n----\n');
     }
   }
   else {

@@ -393,7 +393,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       excludes = ['**/.*', '**/*.map', '**/*.hot-update.json', '**/*.hot-update.js'],
       includes = []
     } = serviceWorker;
-    // console.log('sw?! ', path.join(basePath, inputPath));
     const swPublicPathLength = swPublicPath.length;
     const pathReplacer = swPublicPath === publicPath ? asset => asset : asset => publicPath + asset.substring(swPublicPathLength);
 
@@ -409,9 +408,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
           const newAssets = assets.map(asset => {
             return asset === indexPath ? swPublicPath : pathReplacer(asset);
           });
-
-          // console.log('old assets: ' + JSON.stringify(assets, null, '\n'));
-          // console.log('new assets: ' + JSON.stringify(newAssets, null, '\n'));
 
           return {
             assets: newAssets

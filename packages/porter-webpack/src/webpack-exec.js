@@ -9,8 +9,8 @@ module.exports = function webpackExec({ webpackConfig, logger = console, callbac
       // Do not keep cache anymore
       compiler.purgeInputFileSystem();
       lastHash = null;
-      console.error(err.stack || err);
-      if (err.details) console.error(err.details);
+      logger.error(err.stack || err);
+      if (err.details) logger.error(err.details);
       process.exit(1);
     }
     if (stats.hash !== lastHash) {

@@ -23,7 +23,7 @@ module.exports = function eslintExec({ config, logger, fix = false }) {
   const report = engine.executeOnFiles(files);
 
   if (fix) {
-    logger.info("Fix mode enabled - applying fixes");
+    logger.log("Fix mode enabled - applying fixes");
     CLIEngine.outputFixes(report);
   }
 
@@ -63,7 +63,7 @@ function printResults(engine, results, format, logger) {
   });
 
   if (output) {
-    logger.info(output);
+    logger.log(output);
   }
 
   return true;

@@ -1,38 +1,59 @@
-const logger = {
-  log: function(...args) {
-    console.log(...args);
-  },
-  info: function (...args) {
-    console.info(...args);
-  },
-  warn: function (...args) {
-    console.warn(...args);
-  },
-  error: function (...args) {
-    console.warn(...args);
-  }
-}
+const LOG_LEVELS = ['debug', 'info', 'log', 'warn', 'error'];
 
-const noLogger = {
-  log: function() {},
-  info: function () { },
-  warn: function (...args) {
-    console.warn(...args);
-  },
-  error: function (...args) {
-    console.warn(...args);
-  }
-}
+const NO_OP = () => {};
 
-module.exports = function porterLogger(porterConfig, key = false) {
-  let { forceLog, log = false } = porterConfig;
-  if (key && porterConfig[key] && porterConfig[key].log !== void 0) {
-    log = porterConfig[key].log;
+const NO_LOGGER = {
+  debug: NO_OP,
+  info: NO_OP,
+  log: NO_OP,
+  warn: NO_OP,
+  error: NO_OP
+};
+
+const consoleLogger = logLevel => {
+  const levelIndex = LOG_LEVELS.indexOf(logLevel);
+  if (levelIndex === -1) {
+    throw new Error('invalid log level: ' + logLevel);
   }
-  if (forceLog || log) {
-    return logger;
+  const logger = {};
+  LOG_LEVELS.forEach((level, i) => {
+    if (i < levelIndex) {
+      logger[level] = NO_OP;
+    } else {
+      logger[level] = (...args) => console[level](...args);
+    }
+  });
+  return logger;
+};
+
+
+const memoryLogger = () => {
+  const lines = [];
+  const logger = {};
+  LOG_LEVELS.forEach(level => {
+    logger[level] = (...args) => lines.push({ level, args });
+  });
+  logger.logTo = (logger) => {
+    lines.forEach(({ level, args }) => {
+      logger[level](...args);
+    });
+  };
+  return logger;
+};
+
+function porterLogger(porterConfig, key = false, check = false) {
+  let { silent, logLevel = 'log' } = porterConfig;
+  if (!silent) {
+    if (key && porterConfig[key] && porterConfig[key].logLevel !== void 0) {
+      logLevel = porterConfig[key].logLevel;
+    }
+    return consoleLogger(logLevel);
+  } else {
+    return NO_LOGGER;
   }
-  else {
-    return noLogger;
-  }
+};
+
+module.exports = {
+  porterLogger,
+  memoryLogger
 };
