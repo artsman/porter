@@ -11,7 +11,25 @@ module.exports = function createEslintConfig(porterConfig) {
       ...overrideGlobals,
       process: true
     };
-    const { defineMap = {}, globalPackageMap = {} } = webpack;
+    const { polyfills, defineMap = {}, globalPackageMap = {} } = webpack;
+    if (polyfills) {
+      const { babel, corejs, fetch } = polyfills;
+      if (babel || corejs) {
+        // TODO - add other core-js globals
+        overrideGlobals = {
+          ...overrideGlobals,
+          Promise: true,
+          Symbol: true,
+          Buffer: true
+        };
+      }
+      if (fetch) {
+        overrideGlobals = {
+          ...overrideGlobals,
+          fetch: true
+        };
+      }
+    }
     for (let defineKey of Object.keys(defineMap)) {
       overrideGlobals[defineKey] = true;
     }

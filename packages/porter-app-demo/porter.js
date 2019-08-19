@@ -21,7 +21,7 @@ module.exports = {
     }
   },
   webpack: {
-    useEslint: true,
+    useEslint: false,
     srcPaths: [
       "src"
     ],
@@ -155,7 +155,7 @@ module.exports = {
   express: {
     productName: productName,
     host: "localhost",
-    port: "9999",
+    port: "4321",
     secure: undefined,
     openBrowser: false,
     compress: true,

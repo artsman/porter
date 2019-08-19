@@ -141,8 +141,11 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   let devtool = isDev ? 'cheap-module-source-map' : 'source-map';
   let entryValues = [];
   if (polyfills) {
-    if (polyfills.babel) {
-      entryValues.push('@babel/polyfill');
+    if (polyfills.babel || polyfills.corejs) {
+      entryValues.push("core-js/stable");
+    }
+    if (polyfills.babel || polyfills.regenerator) {
+      entryValues.push("regenerator-runtime/runtime");
     }
     if (polyfills.fetch) {
       entryValues.push('whatwg-fetch');

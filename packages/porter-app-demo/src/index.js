@@ -1,4 +1,4 @@
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import React from 'react';
 import { render } from 'react-dom';
 
@@ -7,7 +7,9 @@ import Routes from './routes/Routes';
 
 import { config } from './config';
 
-const history = createHistory({
+
+
+const history = createBrowserHistory({
   basename: config.getRouterBasePath()
 });
 
@@ -15,16 +17,6 @@ function renderApp(Routes) {
   let rootComponent = (
     <Routes history={history} />
   );
-
-  if (process.env.NODE_ENV !== 'production') {
-    const HotLoaderWrapper = require('@artsman/react-hot').HotLoaderWrapper;
-
-    rootComponent = (
-      <HotLoaderWrapper>
-        {rootComponent}
-      </HotLoaderWrapper>
-    );
-  }
 
   render(rootComponent, document.getElementById('root'));
 }
