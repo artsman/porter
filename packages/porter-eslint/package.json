@@ -26,7 +26,6 @@
   "dependencies": {
     "@porterjs/config": "^1.0.22",
     "@porterjs/eslint-config": "^1.0.25",
-    "@porterjs/logger": "^1.0.22",
-    "eslint": "^6.1.0"
+    "@porterjs/logger": "^1.0.22"
   }
 }
