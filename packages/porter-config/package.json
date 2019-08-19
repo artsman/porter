@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/config",
-  "version": "1.0.22",
+  "version": "1.0.28",
   "description": "porter config package",
   "repository": {
     "type": "git",
@@ -20,6 +20,6 @@
   },
   "main": "src/index.js",
   "dependencies": {
-    "@porterjs/logger": "^1.0.22"
+    "@porterjs/logger": "^1.0.28"
   }
 }

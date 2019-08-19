@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/rollup",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "porter rollup package",
   "repository": {
     "type": "git",
@@ -24,8 +24,8 @@
   },
   "dependencies": {
     "@porterjs/babel-config": "^1.0.22",
-    "@porterjs/config": "^1.0.22",
-    "@porterjs/logger": "^1.0.22",
+    "@porterjs/config": "^1.0.28",
+    "@porterjs/logger": "^1.0.28",
     "pretty-ms": "^5.0.0",
     "rimraf": "^3.0.0",
     "rollup": "^1.19.4",
