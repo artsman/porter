@@ -4,11 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Reveal</title>
+    <title>Porter App Demo</title>
     <!-- CSS Tags -->
-    <% for (var cssIndex = 0; cssIndex < htmlWebpackPlugin.files.css.length; cssIndex++) { %>
-    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[cssIndex] %>">
-    <% } %>
 </head>
 <body>
     <noscript>This page requires Javascript to be enabled.</noscript>
@@ -40,9 +37,6 @@
         </script>
     </div>
     <!-- Script Tags -->
-    <% for (var jsIndex = 0; jsIndex < htmlWebpackPlugin.files.js.length; jsIndex++) { %>
-    <script src="<%= htmlWebpackPlugin.files.js[jsIndex] %>"></script>
-    <% } %>
     <script>
 //        if('serviceWorker' in navigator) {
 //            navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(function(registration) {
