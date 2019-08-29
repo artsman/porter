@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/config",
-  "version": "1.0.28",
+  "version": "1.0.30",
   "description": "porter config package",
   "repository": {
     "type": "git",
