@@ -16,6 +16,8 @@ module.exports = function loadPorterConfig(basePath, args) {
 
   let logger = porterLogger({ silent }, 'config');
 
+  const extraArgs = [];
+
   args.slice(2).forEach(function (arg) {
     if (hasConfigArg) {
       configFile = arg;
@@ -33,6 +35,8 @@ module.exports = function loadPorterConfig(basePath, args) {
     }
     else if (arg === '--silent' || arg === '-S') {
       silent = true;
+    } else {
+      extraArgs.push(arg);
     }
   });
 
@@ -70,5 +74,8 @@ module.exports = function loadPorterConfig(basePath, args) {
   else {
     process.exit(1);
   }
-  return porterConfig;
+  return {
+    ...porterConfig,
+    extraArgs
+  };
 }

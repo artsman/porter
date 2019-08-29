@@ -6,8 +6,10 @@ const { porterLogger } = require("@porterjs/logger");
 const eslintExec = require("../eslint-exec");
 
 const porterConfig = loadPorterConfig(process.cwd(), process.argv);
-const { eslint } = porterConfig;
+const { eslint, extraArgs } = porterConfig;
 
 const logger = porterLogger(porterConfig, 'eslint');
 
-eslintExec({ config: eslint, logger });
+const config = extraArgs && extraArgs.length ? {...eslint, files: extraArgs } : eslint;
+
+eslintExec({ config, logger });
