@@ -48,7 +48,7 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
     };
     config.plugins.push(terser(terserOptions));
   }
-  if (licenseFile !== false) {
+  if (licenseFile) {
     config.plugins.push(
       license({
         sourceMap: sourceMap,
