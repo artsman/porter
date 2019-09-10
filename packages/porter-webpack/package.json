@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/webpack",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "porter webpack package",
   "repository": {
     "type": "git",
@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.6.0",
-    "@porterjs/babel-config": "^1.0.22",
+    "@porterjs/babel-config": "^1.0.31",
     "@porterjs/config": "^1.0.30",
-    "@porterjs/eslint-config": "^1.0.30",
+    "@porterjs/eslint-config": "^1.0.31",
     "@porterjs/logger": "^1.0.28",
     "babel-loader": "^8.0.6",
     "core-js": "^3.2.1",

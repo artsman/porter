@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/rollup",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "porter rollup package",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "porter-rollup-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@porterjs/babel-config": "^1.0.22",
+    "@porterjs/babel-config": "^1.0.31",
     "@porterjs/config": "^1.0.30",
     "@porterjs/logger": "^1.0.28",
     "pretty-ms": "^5.0.0",
