@@ -50,9 +50,9 @@
     "serviceworker-webpack-dev-plugin": "^1.0.4",
     "split-chunk-loader": "^1.0.1",
     "style-loader": "^1.0.0",
-    "terser-webpack-plugin": "^2.0.1",
+    "terser-webpack-plugin": "^2.1.0",
     "url-loader": "^2.1.0",
-    "webpack": "^4.39.3",
+    "webpack": "^4.40.2",
     "webpack-bundle-analyzer": "^3.5.0",
     "webpack-sentry-plugin": "^2.0.2",
     "whatwg-fetch": "^3.0.0"
