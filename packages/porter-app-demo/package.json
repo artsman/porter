@@ -23,9 +23,9 @@
     "@porterjs/app": "^1.0.31",
     "bootstrap": "^4.3.1",
     "bootstrap-4-theme": "^1.0.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-router": "^5.0.1",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-router": "^5.1.1",
     "react-router-routes": "^1.0.4",
     "react-router-split-routes": "^1.0.11"
   }
