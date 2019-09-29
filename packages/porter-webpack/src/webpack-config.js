@@ -39,11 +39,11 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const { targets, options } = babel;
 
   const {
-    srcPaths, css, sass, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
+    srcPaths, css, sass, svelte, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
     outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
     defineMap, noParse, noopRegexps, useEslint,
     localPackages, sourceMap = true,
-    minify, hotModuleReplacement, reactHotLoader,
+    minify, hotModuleReplacement, reactHotLoader, svelteHotReload,
     reportFilename, sentry, sentryUpload, serviceWorker
   } = webpack;
 
@@ -53,7 +53,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const bundleNameCSS = bundleName + '.css';
   const hasLocalPackages = (isDev && localPackages);
 
-  let resolve;
+  let resolve = {};
   let packageToSrcPathMap = {};
   let packageToConfigFileMap = {};
 
@@ -119,9 +119,9 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     processPackages(localPackages, 'Local Packages Map');
 
     resolve = {
-      'modules': modulePackages,
-      'alias': packageToEntryFileMap,
-      //'symlinks': false
+      modules: modulePackages,
+      alias: packageToEntryFileMap,
+      //symlinks: false
     };
   }
 
@@ -447,7 +447,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   }
   rules.push(
     {
-      test: /\.js$/,
+      test: svelte ? /\.js|\.mjs|\.svelte$/ : /\.js$/,
       loader: 'babel-loader',
       query: {
         cacheDirectory: babelCacheDirectory,
@@ -455,9 +455,22 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
         presets: babelConfig.presets,
         plugins: babelConfig.plugins
       },
-      include: loaderSrcPaths
+      include: svelte ? loaderSrcPaths.concat([path.resolve('node_modules', 'svelte')]) : loaderSrcPaths
     }
   );
+  if (svelte) {
+    rules.push(
+      {
+        test: /\.svelte$/,
+        loader: 'svelte-loader',
+        options: {
+          hotReload: !!svelteHotReload,
+          emitCss: true,
+        },
+        include: loaderSrcPaths
+      }
+    );
+  }
 
   const packageNames = Object.keys(packageToSrcPathMap);
   for (let packageName of packageNames) {
@@ -571,25 +584,22 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   // if (externals !== void 0) {
   //   config.externals = externals;
   // }
-  let extraConfig = {};
-  if (hasLocalPackages) {
-    if (isDev && reactHotLoader) {
-      resolve.alias['react-dom'] = '@hot-loader/react-dom';
-    }
-    extraConfig = {
-      resolve
-    };
-  }
-  else if (isDev && reactHotLoader) {
-    extraConfig = {
-      resolve: {
-        alias: {}
-      }
-    };
-  }
   if (isDev && reactHotLoader) {
-    extraConfig.resolve.alias['react-dom'] = '@hot-loader/react-dom';
+    if (!resolve.alias) {
+      resolve.alias = {};
+    }
+    resolve.alias['react-dom'] = '@hot-loader/react-dom';
   }
-  config = Object.assign({}, config, extraConfig);
+  if (svelte) {
+    if (!resolve.alias) {
+      resolve.alias = {};
+    }
+    resolve.alias['svelte'] = path.resolve('node_modules', 'svelte');
+    resolve.extensions = ['.mjs', '.js', '.svelte'];
+    resolve.mainFields = ['svelte', 'browser', 'module', 'main'];
+  }
+  if (Object.keys(resolve).length > 0) {
+    config = Object.assign({}, config, { resolve });
+  }
   return config;
 };

@@ -6,6 +6,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const license = require('rollup-plugin-license');
 const terser = require('rollup-plugin-terser').terser;
 const rollupAnalyzer = require('rollup-plugin-analyzer').plugin;
+const rollupSvelte = require('rollup-plugin-svelte');
 
 const createBabelConfig = require('./babel-config');
 
@@ -13,7 +14,7 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
   const { babel, rollup } = porterConfig;
   const { targets, options, presets, plugins } = babel;
   const babelConfig = createBabelConfig({ targets, options, mode: 'production', modules: false, presets, plugins });
-  const { inputFile, umdOutputFile, minOutputFile, name, licenseFile, globalPackages, externalPackages, sourceMap = true } = rollup;
+  const { inputFile, umdOutputFile, minOutputFile, name, licenseFile, globalPackages, externalPackages, svelte, svelteCssFile, sourceMap = true } = rollup;
   const outputFile = minify ? minOutputFile : umdOutputFile;
 
   let config = {
@@ -22,6 +23,16 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
       replace({
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
+      ...(svelte ? [rollupSvelte({
+        extensions: ['.svelte'],
+        include: '**/*.svelte',
+        ...(svelteCssFile ? {
+          emitCss: true,
+          css: function (css) {
+            css.write(svelteCssFile);
+          }
+        } : {})
+      })] : []),
       rollupBabel({
         exclude: 'node_modules/**',
         presets: babelConfig.presets,

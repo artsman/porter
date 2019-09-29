@@ -1,0 +1,21 @@
+{
+  "name": "@porterjs/svelte",
+  "version": "1.0.31",
+  "description": "porter svelte package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "svelte"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "svelte": "^3.12.1"
+  }
+}
