@@ -14,7 +14,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "porter-rollup -L -F {\\\"rollup\\\":{\\\"a\\\":true}}",
+    "build": "porter-rollup -F {\\\"rollup\\\":{\\\"a\\\":true}}",
     "clean": "porter-rollup-clean"
   },
   "dependencies": {

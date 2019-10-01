@@ -17,6 +17,7 @@ module.exports = {
     }
   },
   rollup: {
+    useEslint: false,
     log: false,
     name: 'PorterRollupDemo',
     licenseFile: 'LICENSE',
@@ -24,5 +25,25 @@ module.exports = {
     analyze: true,
     umdOutputFile: "dist/porter-rollup-demo.js",
     minOutputFile: "dist/porter-rollup-demo.min.js"
+  },
+  eslint: {
+    rules: {
+      "semi": ["error", "always"]
+    },
+    plugins: [
+      "import"
+    ],
+    extends: [
+      "eslint:recommended",
+      "plugin:import/errors"
+    ],
+    settings: {
+    },
+    env: {
+      "browser": true,
+      "es6": true
+      // "node": true
+    },
+    files: 'src'
   }
 };

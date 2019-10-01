@@ -7,6 +7,7 @@ const license = require('rollup-plugin-license');
 const terser = require('rollup-plugin-terser').terser;
 const rollupAnalyzer = require('rollup-plugin-analyzer').plugin;
 const rollupSvelte = require('rollup-plugin-svelte');
+const rollupEslint = require('rollup-plugin-eslint').eslint;
 
 const createBabelConfig = require('./babel-config');
 
@@ -14,7 +15,7 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
   const { babel, rollup } = porterConfig;
   const { targets, options, presets, plugins } = babel;
   const babelConfig = createBabelConfig({ targets, options, mode: 'production', modules: false, presets, plugins });
-  const { inputFile, umdOutputFile, minOutputFile, name, licenseFile, globalPackages, externalPackages, svelte, svelteCssFile, sourceMap = true } = rollup;
+  const { inputFile, umdOutputFile, minOutputFile, name, licenseFile, globalPackages, externalPackages, svelte, svelteCssFile, sourceMap = true, useEslint = false } = rollup;
   const outputFile = minify ? minOutputFile : umdOutputFile;
 
   let config = {
@@ -23,6 +24,10 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
       replace({
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
+      ...(useEslint ? [rollupEslint({
+        configFile: path.join(__dirname, 'rollup-eslint-config.js'),
+        throwOnError: true
+      })] : []),
       ...(svelte ? [rollupSvelte({
         extensions: ['.svelte'],
         include: '**/*.svelte',
@@ -62,10 +67,12 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
   if (licenseFile) {
     config.plugins.push(
       license({
-        sourceMap: sourceMap,
+        sourcemap: sourceMap,
         banner: {
-          file: path.join(basePath, licenseFile),
-          encoding: 'utf-8', // Default is utf-8
+          content: {
+            file: path.join(basePath, licenseFile),
+            encoding: 'utf-8', // Default is utf-8
+          }
         }
       })
     );
