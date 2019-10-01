@@ -1,7 +1,9 @@
 const porterBabelPluginMap = {
   decorators: ["@babel/plugin-proposal-decorators", { "legacy": true }],
   classProperties: "@babel/plugin-proposal-class-properties",
+  nullishCoalescing: "@babel/plugin-proposal-nullish-coalescing-operator",
   objectRestSpread: "@babel/plugin-proposal-object-rest-spread",
+  optionalChaining: "@babel/plugin-proposal-optional-chaining",
   reactJsx: "@babel/plugin-transform-react-jsx",
   forOfAsArray: ["@babel/plugin-transform-for-of", { "assumeArray": true }]
 };
@@ -41,7 +43,9 @@ const porterBabelPluginTestFunctionMap = {};
 const porterBabelPluginList = [
   "decorators",
   "classProperties",
+  "nullishCoalescing",
   "objectRestSpread",
+  "optionalChaining",
   "reactJsx",
   "forOfAsArray",
   "reactRemovePropTypes",
