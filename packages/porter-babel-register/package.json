@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/babel-register",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "porter babel register package",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@babel/core": "^7.6.2",
     "@babel/register": "^7.6.2",
-    "@porterjs/babel-config": "^1.0.31",
+    "@porterjs/babel-config": "^1.0.32",
     "@porterjs/config": "^1.0.30"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/svelte",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "porter svelte package",
   "repository": {
     "type": "git",
