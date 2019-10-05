@@ -44,7 +44,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     defineMap, noParse, noopRegexps, useEslint,
     localPackages, sourceMap = true,
     minify, hotModuleReplacement, reactHotLoader, svelteHotReload,
-    reportFilename, sentry, sentryUpload, serviceWorker
+    reportFilename, sentry, sentryUpload, sentryIgnoreConflict = false, serviceWorker
   } = webpack;
 
   const babelConfig = createBabelConfig({ targets, options: { ...options, reactHotLoader }, mode, modules: false });
@@ -383,8 +383,10 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   }
 
   if (sentryUpload && sentry) {
+    const suppressConflictError = !!sentryIgnoreConflict;
+    const sentryOptions = suppressConflictError ? { ...sentry, suppressConflictError } : sentry;
     plugins.push(
-      new SentryPlugin(sentry)
+      new SentryPlugin(sentryOptions)
     );
   }
 
