@@ -24,14 +24,14 @@
     "porter-webpack-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.6.2",
+    "@babel/core": "^7.7.2",
     "@porterjs/babel-config": "^1.0.32",
     "@porterjs/config": "^1.0.30",
     "@porterjs/eslint-config": "^1.0.32",
     "@porterjs/logger": "^1.0.28",
     "@porterjs/svelte": "^1.0.32",
     "babel-loader": "^8.0.6",
-    "core-js": "^3.2.1",
+    "core-js": "^3.4.0",
     "css-loader": "^3.2.0",
     "eslint-loader": "^3.0.2",
     "eventsource-polyfill": "^0.9.6",
@@ -52,10 +52,10 @@
     "split-chunk-loader": "^1.0.1",
     "style-loader": "^1.0.0",
     "svelte-loader": "^2.13.6",
-    "terser-webpack-plugin": "^2.1.2",
+    "terser-webpack-plugin": "^2.2.1",
     "url-loader": "^2.2.0",
-    "webpack": "^4.41.0",
-    "webpack-bundle-analyzer": "^3.5.2",
+    "webpack": "^4.41.2",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-sentry-plugin": "^2.0.2",
     "whatwg-fetch": "^3.0.0"
   }

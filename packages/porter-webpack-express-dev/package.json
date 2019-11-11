@@ -24,14 +24,14 @@
     "porter-webpack-express-dev": "src/bin/webpack-express-dev.js"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "^16.9.0",
+    "@hot-loader/react-dom": "^16.11.0",
     "@porterjs/babel-config": "^1.0.32",
     "@porterjs/config": "^1.0.30",
     "@porterjs/express": "^1.0.32",
     "@porterjs/webpack": "^1.0.32",
     "express-nunjucks": "^2.2.3",
     "nunjucks": "^3.2.0",
-    "react-hot-loader": "^4.12.14",
+    "react-hot-loader": "^4.12.16",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0"
   }
