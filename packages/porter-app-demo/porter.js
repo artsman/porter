@@ -157,7 +157,7 @@ module.exports = {
     host: "localhost",
     port: "4321",
     secure: undefined,
-    openBrowser: false,
+    openBrowser: true,
     compress: true,
     serviceWorkerPath: false,
     proxy: false,

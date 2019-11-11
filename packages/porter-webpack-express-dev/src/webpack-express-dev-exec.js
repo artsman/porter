@@ -7,7 +7,7 @@ const expressNunjucks = require('express-nunjucks');
 const { startExpressServer } = require('@porterjs/express');
 const { createWebpackConfig } = require('@porterjs/webpack');
 
-module.exports = function startWebpackExpressDevServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console }) {
+module.exports = function startWebpackExpressDevServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console, onStart }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: true });
   const { express: expressConfig, webpack } = porterConfig;
   const { publicPath, reroutes } = webpack;
@@ -84,6 +84,17 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
         });
       }
     }
+    function closeMiddleware() {
+      return new Promise((resolve, reject) => {
+        try {
+          middleware.close(() => resolve());
+        }
+        catch (error) {
+          reject(error);
+        }
+      });
+    }
+    return closeMiddleware;
   }
-  startExpressServer({ expressConfig, basePath, logger: expressLogger, mode: 'development', addMiddleware });
+  return startExpressServer({ expressConfig, basePath, logger: expressLogger, mode: 'development', addMiddleware });
 }

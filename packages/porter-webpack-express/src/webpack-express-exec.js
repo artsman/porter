@@ -4,7 +4,7 @@ const expressNunjucks = require('express-nunjucks');
 const { startExpressServer } = require('@porterjs/express');
 const { createWebpackConfig, webpackExec } = require('@porterjs/webpack');
 
-module.exports = function startWebpackExpressServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console }) {
+module.exports = function startWebpackExpressServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console, onStart }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: false });
   const { express: expressConfig, webpack } = porterConfig;
   const { publicPath, reroutes } = webpack;
@@ -57,8 +57,24 @@ module.exports = function startWebpackExpressServer({ porterConfig, basePath, we
       }
     }
   }
+  let isShutdown = false;
+  let closeServer = null;
+  function shutdown() {
+    isShutdown = true;
+    return new Promise((resolve, reject) => {
+      if (!closeServer) {
+        resolve();
+      } else {
+        closeServer().then(() => resolve(), () => reject());
+      }
+    });
+  }
   function callback() {
-    startExpressServer({ expressConfig, basePath, logger: expressLogger, mode: 'production', addMiddleware });
+    if (!isShutdown) {
+      closeServer = startExpressServer({ expressConfig, basePath, logger: expressLogger, mode: 'production', addMiddleware, onStart });
+    }
   }
   webpackExec({ webpackConfig, logger: webpackLogger, callback });
+
+  return shutdown;
 }

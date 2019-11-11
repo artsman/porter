@@ -215,8 +215,12 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
     addProxyMiddleware(app, proxy);
   }
 
+  let closeMiddleware = null;
   if (addMiddleware) {
-    addMiddleware(app);
+    const closeMiddlewareCallback = addMiddleware(app);
+    if (closeMiddlewareCallback && typeof closeMiddlewareCallback === "function") {
+      closeMiddleware = closeMiddlewareCallback;
+    }
   }
 
   let expressServer;
@@ -239,9 +243,10 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
       logger.error(error);
     } else {
       theServer.keepAliveTimeout = 0; // FIX for Node 8 issue: https://github.com/glenjamin/webpack-hot-middleware/issues/210
-      logger.log(`===> ${productName} on port ${port} in ${mode} mode. ${openBrowser ? 'Opening' : 'Open up'} ${secure ? 'https://' : 'http://'}${host}:${port}/ in your browser.`);
+      const url = `${secure ? 'https://' : 'http://'}${host}:${port}/`;
+      logger.log(`===> ${productName} on port ${port} in ${mode} mode. ${openBrowser ? 'Opening' : 'Open up'} ${url} in your browser.`);
       if (openBrowser) {
-        open(host);
+        open(url);
       }
       if (onStart) {
         onStart();
@@ -249,5 +254,32 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
     }
   }
 
+  function getCloseServerPromise() {
+    return new Promise((resolve, reject) => {
+      try {
+        expressServer.close(() => resolve());
+      }
+      catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  function getCloseMiddlewarePromise() {
+    return new Promise((resolve, reject) => {
+      if (closeMiddleware) {
+        closeMiddleware.then(() => resolve(), () => reject());
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  function stopServer() {
+    return getCloseMiddlewarePromise().then(() => getCloseServerPromise(), () => getCloseServerPromise());
+  }
+
   theServer = expressServer.listen(port, startServerCallback);
+
+  return stopServer;
 };
