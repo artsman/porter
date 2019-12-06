@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/jest",
-  "version": "1.0.32",
+  "version": "2.0.0",
   "description": "porter jest package",
   "repository": {
     "type": "git",
@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.7.5",
-    "@porterjs/babel-config": "^1.0.32",
-    "@porterjs/config": "^1.0.30",
-    "@porterjs/logger": "^1.0.28",
+    "@porterjs/babel-config": "^2.0.0",
+    "@porterjs/config": "^2.0.0",
+    "@porterjs/logger": "^2.0.0",
     "jest": "^24.9.0",
     "lodash": "^4.17.15"
   }

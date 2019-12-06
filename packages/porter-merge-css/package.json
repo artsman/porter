@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/merge-css",
-  "version": "1.0.30",
+  "version": "2.0.0",
   "description": "porter merge-css package",
   "repository": {
     "type": "git",
@@ -23,8 +23,8 @@
     "porter-merge-css": "src/bin/merge-css.js"
   },
   "dependencies": {
-    "@porterjs/config": "^1.0.30",
-    "@porterjs/logger": "^1.0.28",
+    "@porterjs/config": "^2.0.0",
+    "@porterjs/logger": "^2.0.0",
     "concat": "^1.0.3",
     "glob": "^7.1.6",
     "mkdirp": "^0.5.1"
