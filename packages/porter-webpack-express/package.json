@@ -19,6 +19,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "src/webpack-express-exec.js",
   "bin": {
     "porter-webpack-express": "src/bin/webpack-express.js"
   },
