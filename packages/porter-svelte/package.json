@@ -16,6 +16,6 @@
     "access": "public"
   },
   "dependencies": {
-    "svelte": "^3.13.0"
+    "svelte": "^3.16.0"
   }
 }
