@@ -276,6 +276,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
   }
 
   function stopServer() {
+    logger.log(`===> ${productName} on port ${port} in ${mode} mode shutting down`);
     return getCloseMiddlewarePromise().then(() => getCloseServerPromise(), () => getCloseServerPromise());
   }
 
