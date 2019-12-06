@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/app-demo",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "porter app demo package",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "clean": "porter-webpack-clean -L"
   },
   "dependencies": {
-    "@porterjs/app": "^2.0.0",
+    "@porterjs/app": "^2.0.1",
     "bootstrap": "^4.4.1",
     "bootstrap-4-theme": "^1.0.2",
     "react": "^16.12.0",
