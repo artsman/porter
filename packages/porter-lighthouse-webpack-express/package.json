@@ -1,0 +1,33 @@
+{
+  "name": "@porterjs/lighthouse-webpack-express",
+  "version": "2.0.1",
+  "description": "porter lighthouse audit package for apps using porter webpack express",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "lighthouse",
+    "audit",
+    "webpack",
+    "express"
+  ],
+  "files": [
+    "src"
+  ],
+  "main": "src/index.js",
+  "bin": {
+    "porter-lighthouse-webpack-express": "src/bin/lighthouse-webpack-express.js"
+  },
+  "author": "jharris",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@porterjs/config": "^2.0.0",
+    "@porterjs/lighthouse": "^2.0.1",
+    "@porterjs/webpack-express": "^2.0.1"
+  }
+}
