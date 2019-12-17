@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/mocha-demo",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "porter mocha demo package",
   "repository": {
     "type": "git",
@@ -18,6 +18,6 @@
     "mocha": "mocha -r @porterjs/babel-register test"
   },
   "dependencies": {
-    "@porterjs/mocha": "^2.0.0"
+    "@porterjs/mocha": "^2.0.2"
   }
 }
