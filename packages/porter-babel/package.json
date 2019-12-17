@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.7.5",
-    "@babel/plugin-transform-runtime": "^7.7.5",
+    "@babel/plugin-transform-runtime": "^7.7.6",
     "@porterjs/babel-config": "^2.0.0",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
