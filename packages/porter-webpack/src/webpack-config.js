@@ -546,17 +546,19 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       });
     }
     if (loaderSassPaths && loaderSassPaths.length > 0) {
-      rules.push(
-        {
-          test: /\.scss$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            "raw-loader",
-            "sass-loader"
-          ],
-          include: loaderSassPaths
-        }
-      );
+      loaderSassPaths.forEach(sassPath => {
+        rules.push(
+          {
+            test: /\.scss$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              "css-loader",
+              "sass-loader"
+            ],
+            include: sassPath
+          }
+        );
+      });
     }
     rules.push(
       { test: /\.(png|jpg|gif)$/, loader: "file-loader" },
