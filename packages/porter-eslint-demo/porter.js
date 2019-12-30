@@ -31,6 +31,7 @@ module.exports = {
     options: {
       decorators: false,
       classProperties: true,
+      privateMethods: true,
       objectRestSpread: true,
       reactJsx: true,
       forOfAsArray: false,
