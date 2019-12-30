@@ -1,6 +1,7 @@
 const porterBabelPluginMap = {
   decorators: ["@babel/plugin-proposal-decorators", { "legacy": true }],
   classProperties: "@babel/plugin-proposal-class-properties",
+  privateMethods: "@babel/plugin-proposal-private-methods",
   nullishCoalescing: "@babel/plugin-proposal-nullish-coalescing-operator",
   objectRestSpread: "@babel/plugin-proposal-object-rest-spread",
   optionalChaining: "@babel/plugin-proposal-optional-chaining",
@@ -43,6 +44,7 @@ const porterBabelPluginTestFunctionMap = {};
 const porterBabelPluginList = [
   "decorators",
   "classProperties",
+  "privateMethods",
   "nullishCoalescing",
   "objectRestSpread",
   "optionalChaining",
