@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/express",
-  "version": "2.0.1",
+  "version": "2.0.4",
   "description": "porter express package",
   "repository": {
     "type": "git",
