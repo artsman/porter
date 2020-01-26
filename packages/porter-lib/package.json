@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/lib",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "porter lib package",
   "repository": {
     "type": "git",
@@ -17,10 +17,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@porterjs/babel": "^2.0.2",
-    "@porterjs/eslint": "^2.0.2",
-    "@porterjs/merge-css": "^2.0.0",
-    "@porterjs/rollup": "^2.0.2",
+    "@porterjs/babel": "^2.0.3",
+    "@porterjs/eslint": "^2.0.3",
+    "@porterjs/merge-css": "^2.0.3",
+    "@porterjs/rollup": "^2.0.3",
     "@porterjs/version": "^2.0.2"
   }
 }

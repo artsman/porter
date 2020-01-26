@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/eslint-demo",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "porter eslint demo package",
   "repository": {
     "type": "git",
@@ -17,6 +17,6 @@
     "build": "porter-eslint"
   },
   "dependencies": {
-    "@porterjs/eslint": "^2.0.2"
+    "@porterjs/eslint": "^2.0.3"
   }
 }
