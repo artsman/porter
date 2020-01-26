@@ -40,7 +40,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
 
   const {
     srcPaths, css, sass, svelte, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
-    outputPath, publicPath, bundleName, globalPackageMap, babelCacheDirectory,
+    outputPath, publicPath, bundleNameJS, bundleNameCSS, bundleName, globalPackageMap, babelCacheDirectory,
     defineMap, noParse, noopRegexps, useEslint,
     localPackages, sourceMap = true,
     minify, hotModuleReplacement, reactHotLoader, svelteHotReload,
@@ -49,8 +49,8 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
 
   const babelConfig = createBabelConfig({ targets, options: { ...options, reactHotLoader }, mode, modules: false });
 
-  const bundleNameJS = bundleName + '.js';
-  const bundleNameCSS = bundleName + '.css';
+  const bundleNameForJS = (bundleNameJS || bundleName) + '.js';
+  const bundleNameForCSS = (bundleNameCSS || bundleName) + '.css';
   const hasLocalPackages = (isDev && localPackages);
 
   let resolve = {};
@@ -169,8 +169,8 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   };
   let output = {
     path: path.join(basePath, outputPath),
-    filename: bundleNameJS,
-    chunkFilename: bundleNameJS,
+    filename: bundleNameForJS,
+    chunkFilename: bundleNameForJS,
     publicPath: publicPath
   };
   // TODO - add webpack output library and libraryTarget support
@@ -267,8 +267,8 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   if (css || sass) {
     plugins.push(
       new MiniCssExtractPlugin({
-        filename: bundleNameCSS,
-        chunkFilename: bundleNameCSS
+        filename: bundleNameForCSS,
+        chunkFilename: bundleNameForCSS
       })
     );
   }
