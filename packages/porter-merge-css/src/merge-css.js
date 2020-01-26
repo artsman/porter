@@ -1,12 +1,12 @@
 const path = require('path');
 const glob = require('glob');
-const mkdirp = require('mkdirp');
+const mkdirpSync = require("mkdirp").sync;
 const concat = require('concat');
 
 module.exports = function mergeCSS({ mergeCSSConfig, basePath, logger }) {
   const { cssPaths, outputFile } = mergeCSSConfig;
 
-  mkdirp(path.join(outputFile, '../'));
+  mkdirpSync(path.join(outputFile, '../'));
 
   let files = [];
   for (let cssPath of cssPaths) {
