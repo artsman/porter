@@ -11,6 +11,7 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: true });
   const { express: expressConfig, webpack } = porterConfig;
   const { publicPath, reroutes } = webpack;
+  const { serverPath = '' } = expressConfig;
 
   const middlewareLogger = {
     trace: webpackLogger.debug,
@@ -41,6 +42,12 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
       }
     }
 
+    if (serverPath) {
+      app.use(serverPath, function (req, res, next) {
+        middleware(req, res, next);
+      });
+    }
+
     app.use(middleware);
     if (webpack.hotModuleReplacement) {
       app.use(webpackHotMiddleware(compiler));
@@ -68,7 +75,7 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
             templateContent[key] = value;
           }
         }
-        app.use(indexPath, function (req, res, next) {
+        app.use(serverPath + indexPath, function (req, res, next) {
           middleware.waitUntilValid(function () {
             let memoryFs = compiler.outputFileSystem;
             let indexFile = memoryFs.readFileSync(indexFilePath, 'utf8');
@@ -78,8 +85,8 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
         });
       }
       else {
-        app.use(indexPath, function (req, res, next) {
-          req.url = publicPath;
+        app.use(serverPath + indexPath, function (req, res, next) {
+          req.url = publicPath || '/';
           return middleware(req, res, next);
         });
       }

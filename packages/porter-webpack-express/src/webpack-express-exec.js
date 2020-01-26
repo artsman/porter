@@ -7,6 +7,7 @@ const { createWebpackConfig, webpackExec } = require('@porterjs/webpack');
 module.exports = function startWebpackExpressServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console, onStart }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: false });
   const { express: expressConfig, webpack } = porterConfig;
+  const { serverPath = '' } = expressConfig;
   const { publicPath, reroutes } = webpack;
 
   function addMiddleware(app) {
@@ -20,8 +21,8 @@ module.exports = function startWebpackExpressServer({ porterConfig, basePath, we
         });
       }
     }
-    app.use(publicPath, staticMiddleware);
-    app.use(publicPath, function (req, res) {
+    app.use(serverPath + publicPath, staticMiddleware);
+    app.use(serverPath + publicPath, function (req, res) {
       res.status(404).send('File Not Found');
     });
     if (webpack.html) {
@@ -46,12 +47,12 @@ module.exports = function startWebpackExpressServer({ porterConfig, basePath, we
           }
         }
 
-        app.use(indexPath, function (req, res, next) {
+        app.use(serverPath + indexPath, function (req, res, next) {
           res.render('index', templateContent);
         });
       }
       else {
-        app.use(indexPath, function (req, res, next) {
+        app.use(serverPath + indexPath, function (req, res, next) {
           res.sendFile(indexFilePath);
         });
       }

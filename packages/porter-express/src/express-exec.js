@@ -173,7 +173,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
    *   proxyHeaderKeysExtra - An array of strings that when not undefined will be added to the headers that get proxied to/from the proxyHost
    */
   const {
-    productName, host, port, secure, openBrowser, compress, staticMap, staticQueryMap, proxy
+    productName, host, port, secure, openBrowser, compress, staticMap, staticQueryMap, proxy, serverPath
   } = expressConfig;
 
   if (compress) {
@@ -243,7 +243,7 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
       logger.error(error);
     } else {
       theServer.keepAliveTimeout = 0; // FIX for Node 8 issue: https://github.com/glenjamin/webpack-hot-middleware/issues/210
-      const url = `${secure ? 'https://' : 'http://'}${host}:${port}/`;
+      const url = `${secure ? 'https://' : 'http://'}${host}:${port}${serverPath}/`;
       logger.log(`===> ${productName} on port ${port} in ${mode} mode. ${openBrowser ? 'Opening' : 'Open up'} ${url} in your browser.`);
       if (openBrowser) {
         open(url);
