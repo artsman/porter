@@ -24,7 +24,7 @@
     "porter-webpack-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.8.3",
+    "@babel/core": "^7.8.7",
     "@porterjs/babel-config": "^2.0.3",
     "@porterjs/config": "^2.0.0",
     "@porterjs/eslint-config": "^2.0.5",
@@ -37,7 +37,7 @@
     "eventsource-polyfill": "^0.9.6",
     "exports-loader": "^0.7.0",
     "expose-loader": "^0.7.5",
-    "file-loader": "^5.0.2",
+    "file-loader": "^5.1.0",
     "html-webpack-deploy-plugin": "^2.0.6",
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
@@ -47,16 +47,16 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "raw-loader": "^4.0.0",
     "regenerator-runtime": "^0.13.3",
-    "rimraf": "^3.0.1",
+    "rimraf": "^3.0.2",
     "serviceworker-webpack-dev-plugin": "^1.0.4",
     "split-chunk-loader": "^1.0.1",
     "style-loader": "^1.1.3",
     "svelte-loader": "^2.13.6",
-    "terser-webpack-plugin": "^2.3.2",
+    "terser-webpack-plugin": "^2.3.5",
     "url-loader": "^3.0.0",
-    "webpack": "^4.41.5",
+    "webpack": "^4.42.0",
     "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-sentry-plugin": "^2.0.2",
+    "webpack-sentry-plugin": "^2.0.3",
     "whatwg-fetch": "^3.0.0"
   }
 }
