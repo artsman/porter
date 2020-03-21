@@ -171,9 +171,10 @@ module.exports = function startExpressServer({ expressConfig, basePath, mode, lo
    *   proxySocketQueryKeys - An array of request query fields to be forwarded from the socket handshake
    *   proxyHeaderKeysForced - An array of strings that when not undefined will control the headers that get proxied to/from the proxyHost
    *   proxyHeaderKeysExtra - An array of strings that when not undefined will be added to the headers that get proxied to/from the proxyHost
+   * serverPath - the base path to append to the server url
    */
   const {
-    productName, host, port, secure, openBrowser, compress, staticMap, staticQueryMap, proxy, serverPath
+    productName, host, port, secure, openBrowser, compress, staticMap, staticQueryMap, proxy, serverPath = ''
   } = expressConfig;
 
   if (compress) {
