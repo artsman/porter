@@ -30,7 +30,7 @@
     "@porterjs/config": "^2.0.0",
     "@porterjs/express": "^2.0.4",
     "@porterjs/webpack": "^2.0.5",
-    "express-nunjucks": "^2.2.3",
+    "express-nunjucks": "^2.2.5",
     "nunjucks": "^3.2.1",
     "react-hot-loader": "^4.12.20",
     "webpack-dev-middleware": "^3.7.2",

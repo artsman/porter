@@ -30,7 +30,7 @@
     "@porterjs/logger": "^2.0.0",
     "fs-readdir-recursive": "^1.1.0",
     "lodash": "^4.17.15",
-    "mkdirp": "^1.0.3",
+    "mkdirp": "^1.0.4",
     "output-file-sync": "^2.0.1",
     "rimraf": "^3.0.2",
     "slash": "^3.0.0"
