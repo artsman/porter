@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/lighthouse-webpack-express",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "porter lighthouse audit package for apps using porter webpack express",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@porterjs/config": "^2.0.0",
-    "@porterjs/lighthouse": "^2.0.5",
-    "@porterjs/webpack-express": "^2.0.5"
+    "@porterjs/lighthouse": "^2.0.6",
+    "@porterjs/webpack-express": "^2.0.6"
   }
 }

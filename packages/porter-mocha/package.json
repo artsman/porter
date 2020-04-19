@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/mocha",
-  "version": "2.0.3",
+  "version": "2.0.6",
   "description": "porter mocha package",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
     "porter-mocha": "src/bin/mocha.js"
   },
   "dependencies": {
-    "@porterjs/babel-register": "^2.0.3",
+    "@porterjs/babel-register": "^2.0.6",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
     "mocha": "^7.1.1"
