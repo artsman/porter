@@ -18,7 +18,7 @@
     "access": "public"
   },
   "dependencies": {
-    "node-sass": "^4.14.0",
+    "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2"
   }
 }

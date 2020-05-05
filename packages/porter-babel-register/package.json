@@ -21,7 +21,7 @@
   },
   "main": "src/babel-register.js",
   "dependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.9.6",
     "@babel/register": "^7.9.0",
     "@porterjs/babel-config": "^2.0.6",
     "@porterjs/config": "^2.0.0"
