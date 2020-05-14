@@ -1,0 +1,22 @@
+{
+  "name": "@porterjs/jest-demo",
+  "version": "2.0.6",
+  "description": "porter jest demo package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artsman/porter.git"
+  },
+  "keywords": [
+    "porter",
+    "jest"
+  ],
+  "author": "jharris",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "porter-jest"
+  },
+  "dependencies": {
+    "@porterjs/jest": "^2.0.6"
+  }
+}
