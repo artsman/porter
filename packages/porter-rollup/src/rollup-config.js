@@ -1,7 +1,7 @@
 const path = require('path');
 const replace = require('@rollup/plugin-replace');
-const rollupBabel = require('@rollup/plugin-babel');
-const node = require('@rollup/plugin-node-resolve');
+const rollupBabel = require('@rollup/plugin-babel').babel;
+const node = require('@rollup/plugin-node-resolve').nodeResolve;
 const commonjs = require('@rollup/plugin-commonjs');
 const license = require('rollup-plugin-license');
 const terser = require('rollup-plugin-terser').terser;
@@ -41,7 +41,8 @@ module.exports = function createRollupConfig({ porterConfig, basePath, minify = 
       rollupBabel({
         exclude: 'node_modules/**',
         presets: babelConfig.presets,
-        plugins: babelConfig.plugins
+        plugins: babelConfig.plugins,
+        babelHelpers: 'bundled'
       }),
       node(),
       commonjs()
