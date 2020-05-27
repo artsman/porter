@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/babel-config",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "porter babel config package",
   "repository": {
     "type": "git",
