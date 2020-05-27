@@ -25,6 +25,6 @@
     "@porterjs/babel-register": "^2.0.6",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
-    "mocha": "^7.1.2"
+    "mocha": "^7.2.0"
   }
 }
