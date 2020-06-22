@@ -24,7 +24,7 @@
     "porter-webpack-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.10.2",
+    "@babel/core": "^7.10.3",
     "@porterjs/babel-config": "^2.0.7",
     "@porterjs/config": "^2.0.0",
     "@porterjs/eslint-config": "^2.0.7",
@@ -52,7 +52,7 @@
     "split-chunk-loader": "^1.0.2",
     "style-loader": "^1.2.1",
     "svelte-loader": "^2.13.6",
-    "terser-webpack-plugin": "^3.0.5",
+    "terser-webpack-plugin": "^3.0.6",
     "url-loader": "^4.1.0",
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.8.0",
