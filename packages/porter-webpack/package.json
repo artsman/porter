@@ -24,7 +24,7 @@
     "porter-webpack-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.10.3",
+    "@babel/core": "^7.10.4",
     "@porterjs/babel-config": "^2.0.7",
     "@porterjs/config": "^2.0.0",
     "@porterjs/eslint-config": "^2.0.7",
@@ -57,6 +57,6 @@
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-sentry-plugin": "^2.0.3",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.1.0"
   }
 }

@@ -34,7 +34,7 @@
     "@rollup/plugin-replace": "^2.3.3",
     "pretty-ms": "^7.0.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.18.0",
+    "rollup": "^2.18.2",
     "rollup-plugin-analyzer": "^3.2.3",
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-license": "^2.1.0",
