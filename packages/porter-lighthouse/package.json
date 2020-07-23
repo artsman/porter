@@ -26,7 +26,7 @@
   "dependencies": {
     "lighthouse": "^6.1.1",
     "lighthouse-batch": "^6.0.0",
-    "puppeteer": "^5.1.0",
+    "puppeteer": "^5.2.1",
     "request": "^2.88.2"
   }
 }
