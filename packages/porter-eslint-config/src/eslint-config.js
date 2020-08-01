@@ -52,10 +52,15 @@ module.exports = function createEslintConfig(porterConfig) {
   }
 
   if (babel && useBabel) {
-    // TODO - change default parser back to "babel-eslint" once https://github.com/babel/babel-eslint/pull/784 is released
-    const { parser = 'babel-eslint-fork', parserOptions = {}, ...otherOptions } = otherConfig;
+    const { parser = '@babel/eslint-parser', parserOptions = {}, ...otherOptions } = otherConfig;
 
     const { targets, options, presets, plugins } = babel;
+
+    // @babel/eslint-parser no longer provides default parserOptions, so use defaults like babel-eslint did:
+    // https://github.com/babel/babel-eslint/blob/6398dac79448a9ac2c8bd3109795433f86799529/lib/index.js#L27
+    parserOptions.ecmaVersion = parserOptions.ecmaVersion || 2018;
+    parserOptions.sourceType = parserOptions.sourceType || "module";
+    parserOptions.allowImportExportEverywhere = parserOptions.allowImportExportEverywhere || false;
 
     const babelConfig = createBabelConfig({ targets, options, mode: 'test', modules: true, presets, plugins });
 
