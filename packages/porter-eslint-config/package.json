@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/eslint-config",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "porter eslint config package",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "main": "src/eslint-config.js",
   "dependencies": {
     "@babel/eslint-parser": "^7.11.0",
-    "@porterjs/babel-config": "^2.0.7",
+    "@porterjs/babel-config": "^2.0.8",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
     "eslint": "^7.6.0",

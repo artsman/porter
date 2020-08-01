@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/jest-demo",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "porter jest demo package",
   "repository": {
     "type": "git",
@@ -17,6 +17,6 @@
     "test": "porter-jest"
   },
   "dependencies": {
-    "@porterjs/jest": "^2.0.7"
+    "@porterjs/jest": "^2.0.8"
   }
 }
