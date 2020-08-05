@@ -23,7 +23,7 @@
     "porter-babel-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "@babel/plugin-transform-runtime": "^7.11.0",
     "@porterjs/babel-config": "^2.0.8",
     "@porterjs/config": "^2.0.0",
