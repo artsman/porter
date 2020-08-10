@@ -26,7 +26,7 @@
     "@porterjs/babel-config": "^2.0.8",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
-    "jest": "^26.2.2",
+    "jest": "^26.3.0",
     "lodash": "^4.17.19"
   }
 }
