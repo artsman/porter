@@ -23,13 +23,13 @@
     "porter-babel-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.4",
     "@babel/plugin-transform-runtime": "^7.11.0",
     "@porterjs/babel-config": "^2.0.8",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
     "fs-readdir-recursive": "^1.1.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "mkdirp": "^1.0.4",
     "output-file-sync": "^2.0.1",
     "rimraf": "^3.0.2",

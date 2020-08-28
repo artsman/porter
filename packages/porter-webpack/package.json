@@ -24,7 +24,7 @@
     "porter-webpack-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.4",
     "@porterjs/babel-config": "^2.0.8",
     "@porterjs/config": "^2.0.0",
     "@porterjs/eslint-config": "^2.0.8",
@@ -32,7 +32,7 @@
     "@porterjs/svelte": "^2.0.8",
     "babel-loader": "^8.1.0",
     "core-js": "^3.6.5",
-    "css-loader": "^4.2.1",
+    "css-loader": "^4.2.2",
     "eslint-loader": "^4.0.2",
     "eventsource-polyfill": "^0.9.6",
     "exports-loader": "^1.1.0",
@@ -42,7 +42,7 @@
     "html-webpack-plugin": "^4.3.0",
     "imports-loader": "^1.1.0",
     "json-loader": "^0.5.7",
-    "mini-css-extract-plugin": "^0.10.0",
+    "mini-css-extract-plugin": "^0.11.0",
     "node-noop": "^1.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "raw-loader": "^4.0.1",

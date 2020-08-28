@@ -21,16 +21,16 @@
   },
   "main": "src/eslint-config.js",
   "dependencies": {
-    "@babel/eslint-parser": "^7.11.3",
+    "@babel/eslint-parser": "^7.11.4",
     "@porterjs/babel-config": "^2.0.8",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
-    "eslint": "^7.6.0",
+    "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-svelte3": "^2.7.3",
-    "prettier": "^2.0.5"
+    "prettier": "^2.1.1"
   }
 }
