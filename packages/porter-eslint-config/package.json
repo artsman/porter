@@ -21,11 +21,11 @@
   },
   "main": "src/eslint-config.js",
   "dependencies": {
-    "@babel/eslint-parser": "^7.11.4",
+    "@babel/eslint-parser": "^7.11.5",
     "@porterjs/babel-config": "^2.0.8",
     "@porterjs/config": "^2.0.0",
     "@porterjs/logger": "^2.0.0",
-    "eslint": "^7.7.0",
+    "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
