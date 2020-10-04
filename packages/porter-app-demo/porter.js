@@ -31,6 +31,9 @@ module.exports = {
       indexFilename: "../index.html",
       templatePath: "src/templates/index.html"
     },
+    htmlDeploy: {
+      // assets: []
+    },
     polyfills: {
       babel: true,
       fetch: true,
@@ -76,33 +79,7 @@ module.exports = {
     noopRegexps: [
       /aPackageThatShouldBeReplacedWithANoop/
     ],
-    deployAssetMap: {
-      "src/assets": "assets/"
-    },
-    // deployPackageAssetMap: {
-    //   "@artsman/react-nav": {
-    //     "assets": {
-    //       "dist/navigation.css": "css/navigation.css"
-    //     },
-    //     "entries": [
-    //       "css/navigation.css"
-    //     ]
-    //   }
-    // },
-    deployPackagePath: ".",
-    localPackageAssetMap: {
-      "@artsman/react-nav": {
-        "dist/navigation.css": "src/navigation.css"
-      }
-    },
-    // resolveMap: {
-    //   "js": {
-    //     '@fortawesome/fontawesome-free-regular$': '@fortawesome/fontawesome-free-regular/shakable.es.js',
-    //     '@fortawesome/fontawesome-free-solid$': '@fortawesome/fontawesome-free-solid/shakable.es.js'
-    //   }
-    // },
-    resolvePackagePath: ".",
-    localResolveMap: {
+    localPackages: {
       "js": {
         "@artsman/react-nav": {
           rootPath: "../react-nav",
@@ -112,7 +89,6 @@ module.exports = {
         }
       }
     },
-    localResolvePackagePath: ".",
     minify: true,
     hotModuleReplacement: true,
     reactHotLoader: true,

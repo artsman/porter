@@ -56,7 +56,8 @@ module.exports = function startWebpackExpressDevServer({ porterConfig, basePath,
     if (webpack.html) {
       const { indexPath = '/', templateObject } = expressConfig;
       if (templateObject) {
-        const indexFilePath = path.resolve(basePath, webpackConfig.output.path, webpack.html.indexFilename);
+        const { filename , indexFilename } = webpack.html;
+        const indexFilePath = path.resolve(basePath, webpackConfig.output.path, filename || indexFilename);
         let nunjucksEnv = new nunjucks.Environment([], { autoescape: false });
         app.set('views', path.dirname(indexFilePath));
         expressNunjucks(app, {

@@ -1,11 +1,13 @@
 const porterBabelPluginMap = {
   decorators: ["@babel/plugin-proposal-decorators", { "legacy": true }],
+  exportDefaultFrom: "@babel/plugin-proposal-export-default-from",
   classProperties: "@babel/plugin-proposal-class-properties",
   privateMethods: "@babel/plugin-proposal-private-methods",
   nullishCoalescing: "@babel/plugin-proposal-nullish-coalescing-operator",
   objectRestSpread: "@babel/plugin-proposal-object-rest-spread",
   optionalChaining: "@babel/plugin-proposal-optional-chaining",
   reactJsx: "@babel/plugin-transform-react-jsx",
+  reactDisplayName: "@babel/plugin-transform-react-display-name",
   forOfAsArray: ["@babel/plugin-transform-for-of", { "assumeArray": true }]
 };
 
@@ -20,6 +22,14 @@ const porterBabelPluginDevelopmentFunctionMap = {};
 const porterBabelPluginProductionMap = {
   reactRemovePropTypes: "babel-plugin-transform-react-remove-prop-types"
 };
+
+const inlineImportsPlugin = "babel-plugin-inline-import";
+
+const getInlineImportsPlugin = inlineExtensions =>[inlineImportsPlugin, {
+  "extensions": [
+    inlineExtensions
+  ]
+}];
 
 const porterBabelPluginProductionFunctionMap = {
   transformImportsMap: function (transformMap) {
@@ -43,12 +53,14 @@ const porterBabelPluginTestFunctionMap = {};
 
 const porterBabelPluginList = [
   "decorators",
+  "exportDefaultFrom",
   "classProperties",
   "privateMethods",
   "nullishCoalescing",
   "objectRestSpread",
   "optionalChaining",
   "reactJsx",
+  "reactDisplayName",
   "forOfAsArray",
   "reactRemovePropTypes",
   "transformImportsMap",
@@ -94,7 +106,7 @@ function getPluginsForOptions(options, mode) {
   return plugins;
 }
 
-module.exports = function createBabelConfig({ targets, options, mode, modules, presets = [], plugins = [] }) {
+module.exports = function createBabelConfig({ targets, options, mode, modules, presets = [], plugins = [], inlineImportExtensions }) {
   if (targets) {
     presets = [
       ["@babel/preset-env", {
@@ -107,6 +119,9 @@ module.exports = function createBabelConfig({ targets, options, mode, modules, p
   }
   if (options) {
     plugins = getPluginsForOptions(options, mode).concat(plugins);
+  }
+  if (inlineImportExtensions) {
+    plugins = plugins.concat(getInlineImportsPlugin(inlineImportExtensions))
   }
   return {
     presets,

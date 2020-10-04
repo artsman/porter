@@ -26,6 +26,10 @@ function isSassInstalled() {
   return isPackageInstalled('sass-loader') && isPackageInstalled('node-sass');
 }
 
+const jsExtensions = ['.js', '.jsx'];
+const jsRegexp = /\.jsx?$/;
+const defaultSvgPattern = /\.svg$/;
+
 /**
  * Builds a webpack config object from the given porter config
  * @param porterConfig - The porter config to use to build the webpack config
@@ -36,24 +40,25 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   const mode = isDev ? 'development' : 'production';
 
   const { babel, eslint, webpack } = porterConfig;
-  const { targets, options } = babel;
+  const { targets, options, ...babelRest } = babel;
 
   const {
-    srcPaths, css, sass, svelte, html, htmlDeploy, polyfills, entry: mainEntry, split, vendor, splitVendor,
-    outputPath, publicPath, bundleNameJS, bundleNameCSS, bundleName, globalPackageMap, babelCacheDirectory,
-    defineMap, noParse, noopRegexps, useEslint,
+    srcPaths, css, sass, svelte, html, htmlDeploy, polyfills, entry: mainEntry = {}, split, vendor, splitVendor,
+    outputPath, publicPath, bundleNameJS, bundleNameCSS, bundleNameWorker, bundleName, globalPackageMap, babelCacheDirectory,
+    defineMap, noParse, noopRegexps, useEslint, resolve, svgInline,
     localPackages, sourceMap = true,
     minify, hotModuleReplacement, reactHotLoader, svelteHotReload,
     reportFilename, sentry, sentryUpload, sentryIgnoreConflict = false, serviceWorker
   } = webpack;
 
-  const babelConfig = createBabelConfig({ targets, options: { ...options, reactHotLoader }, mode, modules: false });
+  const babelConfig = createBabelConfig({ targets, options: { ...options, reactHotLoader }, mode, modules: false, ...babelRest });
 
   const bundleNameForJS = (bundleNameJS || bundleName) + '.js';
   const bundleNameForCSS = (bundleNameCSS || bundleName) + '.css';
+  const bundleNameForWorker = (bundleNameWorker || bundleName + '-worker.js')
   const hasLocalPackages = (isDev && localPackages);
 
-  let resolve = {};
+  let resolveOptions = { modules: [], alias: {}, extensions: jsExtensions, ...(resolve ? resolve : {})};
   let packageToSrcPathMap = {};
   let packageToConfigFileMap = {};
 
@@ -118,14 +123,15 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     }
     processPackages(localPackages, 'Local Packages Map');
 
-    resolve = {
-      modules: modulePackages,
-      alias: packageToEntryFileMap,
-      //symlinks: false
+    resolveOptions = {
+      ...resolveOptions,
+      modules: [...resolveOptions.modules, ...modulePackages],
+      alias: {...resolveOptions.alias, ...packageToEntryFileMap },
     };
   }
 
   let loaderSrcPaths = (Array.isArray(srcPaths) ? srcPaths : [srcPaths]).map(srcPath => path.resolve(basePath, srcPath));
+
 
   let loaderCssPaths = css ? loaderSrcPaths : null;
 
@@ -157,16 +163,17 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     }
     entryValues.push('webpack-hot-middleware/client?reload=true');
   }
-  if (Array.isArray(mainEntry.files)) {
-    entryValues = entryValues.concat(mainEntry.files);
-  }
-  else {
-    entryValues.push(mainEntry.files);
-  }
 
-  let entry = {
-    [mainEntry.name]: entryValues
-  };
+  const { name, files, ...restEntry } = mainEntry
+  let entry = restEntry || {};
+
+  if (name && files) {
+    entry = {
+      ...entry,
+      [name]: entryValues.concat(Array.isArray(files) ? files : [files])
+    };
+  }
+  
   let output = {
     path: path.join(basePath, outputPath),
     filename: bundleNameForJS,
@@ -196,7 +203,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   //   };
   // }
 
-  let plugins = [];
+  let plugins = []; //[new CaseSensitivePathsPlugin()];
   if (globalPackageMap) {
     plugins.push(
       new Webpack.ProvidePlugin(globalPackageMap));
@@ -274,21 +281,14 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   }
 
   if (html) {
+    const { filename, template, indexFilename, templatePath, ...htmlRestOptions } = html
     const htmlOptions = {
-      filename: html.indexFilename,
-      template: html.templatePath
+      chunksSortMode: 'none',
+      filename: filename ? filename : indexFilename,
+      template: template ? template : templatePath,
+      ...htmlRestOptions
     };
-    if (html.inject !== void 0) {
-      htmlOptions.inject = html.inject;
-    }
-    if (html.chunksSortMode !== void 0) {
-      htmlOptions.chunksSortMode = html.chunksSortMode;
-    } else {
-      htmlOptions.chunksSortMode = 'none'; // https://github.com/jantimon/html-webpack-plugin/issues/981
-    }
-    plugins.push(
-      new HtmlWebpackPlugin(htmlOptions)
-    );
+    plugins.push(new HtmlWebpackPlugin(htmlOptions));
 
     if (htmlDeploy) {
       let deployOptions = htmlDeploy;
@@ -434,11 +434,28 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   }
 
   let rules = [];
+  if (svgInline) {
+    const { svgPattern = defaultSvgPattern, exclude, removingTags = [] } = svgInline;
+    rules.push({
+      test: svgPattern,
+      loader: 'svg-inline-loader',
+      exclude,
+      options: {
+        removeTags: removingTags && removingTags.length,
+        removingTags
+      }
+    });
+    if (exclude) {
+      rules.push({ test: exclude, loader: "url-loader?limit=10000&mimetype=image/svg+xml" })
+    }
+  } else {
+    rules.push({ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml" })
+  }
   if (eslint && useEslint) {
     rules.push(
       {
         enforce: 'pre',
-        test: /\.js$/,
+        test: jsRegexp,
         loader: 'eslint-loader',
         options: {
           configFile: path.join(__dirname, 'webpack-eslint-config.js')
@@ -449,7 +466,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   }
   rules.push(
     {
-      test: svelte ? /\.js|\.mjs|\.svelte$/ : /\.js$/,
+      test: svelte ? /\.js|\.mjs|\.svelte$/ : jsRegexp,
       loader: 'babel-loader',
       query: {
         cacheDirectory: babelCacheDirectory,
@@ -480,12 +497,12 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     let packageConfigFile = packageToConfigFileMap[packageName];
     if (packageConfigFile !== void 0) {
       const localPorterConfig = require(packageConfigFile);
-      const { babel: localBabel } = localPorterConfig;
-      const { targets: localTargets, options: localOptions } = localBabel;
-      const localBabelConfig = createBabelConfig({ targets: localTargets, options: localOptions, mode, modules: false });
+      const { babel: localBabel, webpack: localWebpack } = localPorterConfig;
+      const { targets: localTargets, options: localOptions, ...localBabelRest } = localBabel;
+      const localBabelConfig = createBabelConfig({ targets: localTargets, options: localOptions, mode, modules: false, ...localBabelRest });
       rules.push(
         {
-          test: /\.js$/,
+          test: jsRegexp,
           loader: 'babel-loader',
           query: {
             cacheDirectory: babelCacheDirectory,
@@ -522,7 +539,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       }
       rules.push(
         {
-          test: /\.js$/,
+          test: jsRegexp,
           loader: 'babel-loader',
           query: query,
           include: include
@@ -565,8 +582,60 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
       { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?prefix=font/&limit=5000" },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml" }
+      { test: /\.txt$/, use: 'raw-loader' },
+      { test: /\.(glsl|mtx|net)$/, loader: 'raw-loader' },
+      {
+        test: /\.worker\.js$/,
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              filename: path.join(outputPath, bundleNameForWorker)
+            }
+          },
+          {
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: babelCacheDirectory,
+              babelrc: false,
+              presets: babelConfig.presets,
+              plugins: babelConfig.plugins
+            },
+          }
+        ],
+        include: svelte ? loaderSrcPaths.concat([path.resolve('node_modules', 'svelte')]) : loaderSrcPaths
+      }
     );
+    // const newRules = [
+    //   {
+    //     test: /iconjar.*\.json$/,
+    //     use: ['iconjar-json-loader']
+    //   },
+    //   {
+    //     test: /\.css$/,
+    //     include: path.resolve('./src'),
+    //     exclude: [path.resolve('./src/insight/styles'), path.resolve('./node_modules/semantic-ui-css')],
+    //     use: ['style-loader', 'css-loader', 'postcss-loader']
+    //   },
+    //   {
+    //     test: /\.css$/, // global css files that don't need any processing
+    //     exclude: [
+    //       path.resolve('./src/insight/modules'),
+    //       path.resolve('./src/insight/components/ToolTip'),
+    //       path.resolve('./src/insight/components/PerspectivePanel')
+    //     ],
+    //     use: ['style-loader', 'css-loader']
+    //   },
+    //   {
+    //     test: /\.(png|gif|jpg)$/,
+    //     include: [path.resolve('./src/insight/modules'), path.resolve('./src/insight/styles/semantic')],
+    //     use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]'
+    //   },
+    //   {
+    //     test: /\.html?$/,
+    //     use: ['html-loader']
+    //   }
+    // ];
   }
   let module = {
     noParse,
@@ -589,21 +658,30 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
   //   config.externals = externals;
   // }
   if (isDev && reactHotLoader) {
-    if (!resolve.alias) {
-      resolve.alias = {};
-    }
-    resolve.alias['react-dom'] = '@hot-loader/react-dom';
+    resolveOptions.alias['react-dom'] = '@hot-loader/react-dom';
   }
   if (svelte) {
-    if (!resolve.alias) {
-      resolve.alias = {};
-    }
-    resolve.alias['svelte'] = path.resolve('node_modules', 'svelte');
-    resolve.extensions = ['.mjs', '.js', '.svelte'];
-    resolve.mainFields = ['svelte', 'browser', 'module', 'main'];
+    resolveOptions.alias['svelte'] = path.resolve('node_modules', 'svelte');
+    resolveOptions.extensions = ['.mjs', '.js', '.svelte'];
+    resolveOptions.mainFields = ['svelte', 'browser', 'module', 'main'];
   }
-  if (Object.keys(resolve).length > 0) {
-    config = Object.assign({}, config, { resolve });
+  if (Object.keys(resolveOptions).length > 0) {
+    const { alias, modules, extensions, ...resolveRest } = resolveOptions;
+    const hasKeys = val => val && Object.keys(val).length > 0;
+    const hasLength = val => val && val.length > 0;
+    if (hasKeys(alias) || hasLength(modules) || hasLength(extensions) || hasKeys(resolveRest)) {
+      resolveOptions = resolveRest;
+      if (hasKeys(alias)) {
+        resolveOptions.alias = alias
+      }
+      if (hasLength(modules)) {
+        resolveOptions.modules = modules
+      }
+      if (hasLength(extensions)) {
+        resolveOptions.extensions = extensions
+      }
+      config = Object.assign({}, config, { resolve: resolveOptions });
+    }
   }
   return config;
 };

@@ -10,10 +10,10 @@ const porterConfig = loadPorterConfig(process.cwd(), process.argv);
 
 const logger = porterLogger(porterConfig, 'babel');
 
-const mode = 'not-production';
+const mode = 'production';
 
 const { babel } = porterConfig;
-const { inputPath, cjsOutputPath, esOutputPath, targets, options, presets, plugins, sourceMaps, extensions } = babel;
+const { inputPath, cjsOutputPath, esOutputPath, targets, options, presets, plugins, sourceMaps, extensions, inlineImportExtensions } = babel;
 
 if (cjsOutputPath !== false) {
   const cjsBabelConfig = createBabelConfig({ targets, options, mode, modules: true, presets, plugins });
@@ -22,5 +22,15 @@ if (cjsOutputPath !== false) {
 if (esOutputPath !== false) {
   const esBabelConfig = createBabelConfig({ targets, options, mode, modules: false, presets, plugins });
   babelExec({ inputPath, outputPath: esOutputPath, babelConfig: esBabelConfig, sourceMaps, extensions, logger, description: 'in es mode' });
+}
+if (inlineImportExtensions !== undefined) {
+  if (cjsOutputPath !== false) {
+    const cjsBabelConfig = createBabelConfig({ mode, modules: true, plugins, inlineImportExtensions });
+    babelExec({ inputPath, outputPath: cjsOutputPath, babelConfig: cjsBabelConfig, sourceMaps, extensions, logger, description: 'in cjs mode' });
+  }
+  if (esOutputPath !== false) {
+    const esBabelConfig = createBabelConfig({ mode, modules: false, plugins, inlineImportExtensions });
+    babelExec({ inputPath, outputPath: esOutputPath, babelConfig: esBabelConfig, sourceMaps, extensions, logger, description: 'in es mode' });
+  }
 }
 
