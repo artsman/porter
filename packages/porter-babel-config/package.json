@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/babel-config",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "porter babel config package",
   "repository": {
     "type": "git",
@@ -27,8 +27,8 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/plugin-proposal-private-methods": "^7.10.4",
-    "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@babel/plugin-transform-react-display-name": "^7.10.4",
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-plugin-inline-import": "^3.0.0",

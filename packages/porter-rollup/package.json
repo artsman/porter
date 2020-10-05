@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/rollup",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "porter rollup package",
   "repository": {
     "type": "git",
@@ -23,11 +23,11 @@
     "porter-rollup-clean": "src/bin/clean.js"
   },
   "dependencies": {
-    "@porterjs/babel-config": "^2.0.8",
+    "@porterjs/babel-config": "^2.0.9",
     "@porterjs/config": "^2.0.0",
-    "@porterjs/eslint-config": "^2.0.8",
+    "@porterjs/eslint-config": "^2.0.9",
     "@porterjs/logger": "^2.0.0",
-    "@porterjs/svelte": "^2.0.8",
+    "@porterjs/svelte": "^2.0.9",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",

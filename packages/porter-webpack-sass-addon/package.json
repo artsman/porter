@@ -1,6 +1,6 @@
 {
   "name": "@porterjs/webpack-sass-addon",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "porter webpack sass addon package",
   "repository": {
     "type": "git",
