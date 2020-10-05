@@ -23,14 +23,3 @@ if (esOutputPath !== false) {
   const esBabelConfig = createBabelConfig({ targets, options, mode, modules: false, presets, plugins });
   babelExec({ inputPath, outputPath: esOutputPath, babelConfig: esBabelConfig, sourceMaps, extensions, logger, description: 'in es mode' });
 }
-if (inlineImportExtensions !== undefined) {
-  if (cjsOutputPath !== false) {
-    const cjsBabelConfig = createBabelConfig({ mode, modules: true, plugins, inlineImportExtensions });
-    babelExec({ inputPath, outputPath: cjsOutputPath, babelConfig: cjsBabelConfig, sourceMaps, extensions, logger, description: 'in cjs mode' });
-  }
-  if (esOutputPath !== false) {
-    const esBabelConfig = createBabelConfig({ mode, modules: false, plugins, inlineImportExtensions });
-    babelExec({ inputPath, outputPath: esOutputPath, babelConfig: esBabelConfig, sourceMaps, extensions, logger, description: 'in es mode' });
-  }
-}
-
