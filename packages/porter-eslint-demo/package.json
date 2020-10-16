@@ -14,7 +14,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "porter-eslint"
+    "build": "porter-eslint",
+    "lint": "porter-eslint"
   },
   "dependencies": {
     "@porterjs/eslint": "^2.0.9"
