@@ -27,8 +27,8 @@ if (outputPath !== false) {
   maybeRimrafSync(outputPath);
 
   if (html) {
-    const { indexFilename } = html;
-    maybeRimrafSync(path.join(outputPath, indexFilename));
+    const { indexFilename, filename = indexFilename } = html;
+    maybeRimrafSync(path.join(outputPath, filename));
   }
 
   if (reportFilename) {
