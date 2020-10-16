@@ -1,26 +1,25 @@
 module.exports = {
   eslint: {
     rules: {
-      "semi": ["error", "always"]
+      "semi": ["error", "always"],
+      "react/prop-types": [0],
+      "no-console": ["error", { allow: ["warn", "error"] }],
+      "no-unused-vars": ["error", { ignoreRestSiblings: true }],
+      "prettier/prettier": ["error", { singleQuote: true, usePrettierrc: false, printWidth: 120 }]
     },
-    plugins: [
-      "import",
-      "react"
-    ],
-    extends: [
-      "eslint:recommended",
-      "plugin:import/errors",
-      "plugin:react/recommended"
-    ],
+    plugins: ["import", "react", "prettier"],
+    extends: ["eslint:recommended", "plugin:import/errors", "plugin:react/recommended", "plugin:prettier/recommended"],
     settings: {
-      "react": {
-        "version": "16"
+      react: {
+        version: "detect"
       }
     },
     env: {
-      "browser": true
+      browser: true,
+      es6: true,
+      jest: true
     },
-    files: 'src'
+    files: ["src", "porter.js"]
   },
   babel: {
     targets: [
