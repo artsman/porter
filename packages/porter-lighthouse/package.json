@@ -24,9 +24,9 @@
     "access": "public"
   },
   "dependencies": {
-    "lighthouse": "^6.4.1",
-    "lighthouse-batch": "^6.0.0",
-    "puppeteer": "^5.3.1",
+    "lighthouse": "^7.0.1",
+    "lighthouse-batch": "^7.1.0",
+    "puppeteer": "^7.0.0",
     "request": "^2.88.2"
   }
 }

@@ -215,9 +215,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       minimize: true,
       minimizer: [
         new TerserPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap
+          parallel: true
         }),
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
@@ -446,10 +444,16 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       }
     });
     if (exclude) {
-      rules.push({ test: exclude, loader: "url-loader?limit=10000&mimetype=image/svg+xml" })
+      rules.push({ test: exclude, loader: "url-loader", options: {
+        limit: 10000,
+        mimetype: 'image/svg+xml'
+      } })
     }
   } else {
-    rules.push({ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml" })
+    rules.push({ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader", options: {
+      limit: 10000,
+      mimetype: 'image/svg+xml'
+    } })
   }
   if (eslint && useEslint) {
     rules.push(
@@ -468,7 +472,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     {
       test: svelte ? /\.js|\.mjs|\.svelte$/ : jsRegexp,
       loader: 'babel-loader',
-      query: {
+      options: {
         cacheDirectory: babelCacheDirectory,
         babelrc: false,
         presets: babelConfig.presets,
@@ -504,7 +508,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
         {
           test: jsRegexp,
           loader: 'babel-loader',
-          query: {
+          options: {
             cacheDirectory: babelCacheDirectory,
             babelrc: false,
             presets: localBabelConfig.presets,
@@ -515,7 +519,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
       );
     }
     else {
-      let query = {
+      let options = {
         babelrcRoots: packageSrcPath,
         cacheDirectory: babelCacheDirectory
       };
@@ -531,7 +535,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
         //   rootPath: "./node_modules/react-redux/es/index.js"
         // }
         // use the basePath + rootPath as the babel-loader include/entry path
-        query = {
+        options = {
           babelrc: false,
           cacheDirectory: babelCacheDirectory
         };
@@ -541,7 +545,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
         {
           test: jsRegexp,
           loader: 'babel-loader',
-          query: query,
+          options: options,
           include: include
         }
       );
@@ -580,8 +584,14 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
     rules.push(
       { test: /\.(png|jpg|gif)$/, loader: "file-loader" },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
-      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?prefix=font/&limit=5000" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=application/octet-stream" },
+      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader", options: {
+        prefix: 'font/',
+        limit: 5000
+      } },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader", options: {
+        limit: 10000,
+        mimetype: 'application/octet-stream'
+      } },
       { test: /\.txt$/, use: 'raw-loader' },
       { test: /\.(glsl|mtx|net)$/, loader: 'raw-loader' },
       {
@@ -595,7 +605,7 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
           },
           {
             loader: 'babel-loader',
-            query: {
+            options: {
               cacheDirectory: babelCacheDirectory,
               babelrc: false,
               presets: babelConfig.presets,
@@ -606,36 +616,6 @@ module.exports = function createWebpackConfig({ porterConfig, basePath, isDev = 
         include: svelte ? loaderSrcPaths.concat([path.resolve('node_modules', 'svelte')]) : loaderSrcPaths
       }
     );
-    // const newRules = [
-    //   {
-    //     test: /iconjar.*\.json$/,
-    //     use: ['iconjar-json-loader']
-    //   },
-    //   {
-    //     test: /\.css$/,
-    //     include: path.resolve('./src'),
-    //     exclude: [path.resolve('./src/insight/styles'), path.resolve('./node_modules/semantic-ui-css')],
-    //     use: ['style-loader', 'css-loader', 'postcss-loader']
-    //   },
-    //   {
-    //     test: /\.css$/, // global css files that don't need any processing
-    //     exclude: [
-    //       path.resolve('./src/insight/modules'),
-    //       path.resolve('./src/insight/components/ToolTip'),
-    //       path.resolve('./src/insight/components/PerspectivePanel')
-    //     ],
-    //     use: ['style-loader', 'css-loader']
-    //   },
-    //   {
-    //     test: /\.(png|gif|jpg)$/,
-    //     include: [path.resolve('./src/insight/modules'), path.resolve('./src/insight/styles/semantic')],
-    //     use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]'
-    //   },
-    //   {
-    //     test: /\.html?$/,
-    //     use: ['html-loader']
-    //   }
-    // ];
   }
   let module = {
     noParse,

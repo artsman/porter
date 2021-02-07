@@ -7,28 +7,20 @@ const expressNunjucks = require('express-nunjucks');
 const { startExpressServer } = require('@porterjs/express');
 const { createWebpackConfig } = require('@porterjs/webpack');
 
-module.exports = function startWebpackExpressDevServer({ porterConfig, basePath, webpackLogger = console, expressLogger = console, onStart }) {
+module.exports = function startWebpackExpressDevServer({ porterConfig, basePath, expressLogger = console, onStart }) {
   const webpackConfig = createWebpackConfig({ porterConfig, basePath, isDev: true });
   const { express: expressConfig, webpack } = porterConfig;
   const { publicPath, reroutes } = webpack;
   const { serverPath = '' } = expressConfig;
 
-  const middlewareLogger = {
-    trace: webpackLogger.debug,
-    debug: webpackLogger.debug,
-    info: webpackLogger.info,
-    warn: webpackLogger.warn,
-    error: webpackLogger.error
-  };
 
   function addMiddleware(app) {
     let compiler = Webpack(webpackConfig);
     let middleware = webpackDevMiddleware(compiler, {
       stats: "errors-only",
-      noInfo: true,
+      // noInfo: true,
       publicPath: publicPath,
-      index: webpack.html ? webpack.html.indexFilename : false,
-      logger: middlewareLogger
+      index: webpack.html ? webpack.html.indexFilename : false
     });
 
     if (reroutes) {

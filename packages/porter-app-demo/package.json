@@ -21,10 +21,10 @@
   },
   "dependencies": {
     "@porterjs/app": "^2.0.9",
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.6.0",
     "bootstrap-4-theme": "^1.0.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-router": "^5.2.0",
     "react-router-routes": "^1.0.4",
     "react-router-split-routes": "^1.0.11"
